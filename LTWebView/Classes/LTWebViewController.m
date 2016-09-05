@@ -1,9 +1,9 @@
 //
 //  LTWebViewController.m
-//  NDWebView
+//  LTWebView
 //
 //  Created by Futao on 16/9/2.
-//  Copyright © 2016年 ND. All rights reserved.
+//  Copyright © 2016年 Futao.me. All rights reserved.
 //
 
 #import "LTWebViewController.h"

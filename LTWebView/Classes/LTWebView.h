@@ -1,9 +1,9 @@
 //
 //  LTWebView.h
-//  JDMEForIphone
+//  LTWebView
 //
-//  Created by NiuDu on 2016/4/26.
-//  Copyright © 2016年 NiuDu All rights reserved.
+//  Created by Futao on 16/9/2.
+//  Copyright © 2016年 Futao.me. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

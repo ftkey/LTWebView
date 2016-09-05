@@ -1,9 +1,9 @@
 //
 //  LTWKWebViewConfiguration.h
-//  NDWebView
+//  LTWebView
 //
-//  Created by Futao on 16/9/1.
-//  Copyright © 2016年 ND. All rights reserved.
+//  Created by Futao on 16/9/2.
+//  Copyright © 2016年 Futao.me. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
