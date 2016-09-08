@@ -31,6 +31,8 @@ NS_SWIFT_NAME(LTWebViewController)
 // Background Title. default NO
 @property (nonatomic,readonly,strong) UIView *retryView;
 
+- (__nullable id)loadRequest:(NSURLRequest *)request;
+
 - (instancetype)initWithURL:(NSURL *)baseURL type: (LTWebViewType)type title:(NSString * __nullable)title userAgent:(NSString* __nullable)userAgent;
 - (instancetype)initWithURL:(NSURL *)baseURL type: (LTWebViewType)type title:(NSString * __nullable)title;
 

@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "LTWebView"
-  s.version      = "1.0"
+  s.version      = "1.1"
   s.summary      = "LTWebView LTWebViewController is a UIWebView/WKWebView Controller"
   s.homepage     = "https://futao.me/"
   s.license      = "Apache License, Version 2.0"

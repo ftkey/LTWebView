@@ -44,7 +44,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
 
 - (instancetype)initWithURL:(NSURL *)baseURL type:(LTWebViewType)type title:(NSString * __nullable)title userAgent:(NSString* __nullable)userAgent {
     if(self = [super init]) {
-        _webViewType = LTWebViewTypeWKWebView;
+        _webViewType = type;
         _timeoutInternal = 15.0;
         _baseURLTitle = title;
         _baseURL = baseURL;
@@ -472,6 +472,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
         _webView.webViewDelegate.forwardDelegate = self;
     }
     if (_userAgent.length)  _webView.customUserAgent = _userAgent;
+    _webView.translatesAutoresizingMaskIntoConstraints = false;
     return _webView;
 }
 - (UILabel *)backgroundLabel {
@@ -485,9 +486,10 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     _backgroundLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [_backgroundLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     _backgroundLabel.hidden = !self.showsBackgroundLabel;
+    _backgroundLabel.translatesAutoresizingMaskIntoConstraints = false;
     return _backgroundLabel;
 }
-- (UIButton *)webRetryView {
+- (UIButton *)retryView {
     if (_retryView) return _retryView;
     _retryView = [UIButton buttonWithType:UIButtonTypeSystem];
     _retryView.backgroundColor = [UIColor whiteColor];
