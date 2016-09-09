@@ -320,7 +320,7 @@
 - (__nullable id)loadRequest:(NSURLRequest *)request{
     if (_isWKWebView) {
 #if LT_WKWebView_USE_Shared_Cookies
-        NSMutableURLRequest *mreq = [LTWKWebViewCookiesHandler preCookiesRequest:request];
+        NSMutableURLRequest *mreq = [[LTWKWebViewCookiesHandler preCookiesRequest:request] mutableCopy];
 #else
         NSMutableURLRequest *mreq = [request mutableCopy];
 #endif
