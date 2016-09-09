@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LTWKNavigationDelegate : NSObject<WKScriptMessageHandler, WKNavigationDelegate>
 
 @property (nonatomic, weak,nullable) id <LTWKScriptMessageHandler, LTWKNavigationDelegate> forwardDelegate;
+@property (nonatomic, weak)WKWebView *webView;
 - (instancetype)init;
 @end
 NS_ASSUME_NONNULL_END

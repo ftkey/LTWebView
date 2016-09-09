@@ -11,6 +11,9 @@
 #import "LTWKWebViewUIDelegate.h"
 #import "LTWKNavigationDelegate.h"
 #import "LTWKWebViewConfiguration.h"
+#if LT_WKWebView_USE_Shared_Cookies
+#import "LTWKWebViewCookiesHandler.h"
+#endif
 
 @import WebKit;
 @interface WKWebView (Privates)
@@ -36,6 +39,9 @@
     if(_isWKWebView)
     {
         WKWebView* webView = _webView;
+#if LT_WKWebView_USE_Shared_Cookies
+        [[LTWKWebViewCookiesHandler defaultCookiesHandler] setWebView:nil];
+#endif
         [webView removeObserver:self forKeyPath:@"title"];
         [self setWKUIDelegate:nil];
         [self setWKNavigationDelegate:nil];
@@ -90,6 +96,11 @@
 - (void)initWKWebView{
     LTWKWebViewConfiguration* config = [LTWKWebViewConfiguration defaultConfiguration];
     WKWebView * webView = [[WKWebView alloc] initWithFrame:self.bounds configuration:config];
+#if LT_WKWebView_USE_Shared_Cookies
+    [[LTWKWebViewCookiesHandler defaultCookiesHandler] setWebView:webView];
+    [[LTWKWebViewCookiesHandler defaultCookiesHandler] addCookieOutScriptWithController:config.userContentController];
+//    [[LTWKWebViewCookiesHandler defaultCookiesHandler] addCookieInScriptWithController:config.userContentController];
+#endif
     _webView = webView;
     [self addSubview:webView];
     webView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -100,8 +111,6 @@
     [[webView configuration] setAllowsInlineMediaPlayback:self.allowsInlineMediaPlayback];
     self.wKUIDelegate = [[LTWKWebViewUIDelegate alloc] init];
     self.wKNavigationDelegate =  [[LTWKNavigationDelegate alloc] init];
-
-
     _isWKWebView = YES;
     if (!_webView) {
         [self initUIWebView];
@@ -137,6 +146,7 @@
         @try {
             id webDocumentView = [_webView valueForKey:@"documentView"];
             id webView = [webDocumentView valueForKey:@"webView"];
+
             [webView setCustomUserAgent:customUserAgent];
         }@catch (NSException *exception) { }
     }
@@ -226,9 +236,9 @@
     }
 }
 
-- (NSURL *)currentURL{
+- (NSURL *)URL{
     if (_isWKWebView) {
-        return [[[(WKWebView *)_webView backForwardList] currentItem] URL];
+        return [(WKWebView *)_webView URL];
     }else{
         return [[(UIWebView *)_webView request] URL];
     }
@@ -308,11 +318,19 @@
 }
 #pragma mark - 公共接口
 - (__nullable id)loadRequest:(NSURLRequest *)request{
-    self.originRequest  = [request mutableCopy];
     if (_isWKWebView) {
-        return [(WKWebView *)_webView loadRequest:request];
+#if LT_WKWebView_USE_Shared_Cookies
+        NSMutableURLRequest *mreq = [LTWKWebViewCookiesHandler preCookiesRequest:request];
+#else
+        NSMutableURLRequest *mreq = [request mutableCopy];
+#endif
+        self.originRequest = mreq;
+        return [(WKWebView *)_webView loadRequest:self.originRequest];
     }else{
-        [(UIWebView *)_webView loadRequest:request];
+        NSMutableURLRequest *mreq = [request mutableCopy];
+        mreq.HTTPShouldHandleCookies = YES;
+        self.originRequest = mreq;
+        [(UIWebView *)_webView loadRequest:self.originRequest];
         return nil;
     }
 }

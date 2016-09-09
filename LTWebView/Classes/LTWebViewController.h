@@ -10,6 +10,8 @@
 #import "LTWebView.h"
 NS_ASSUME_NONNULL_BEGIN
 
+
+
 NS_SWIFT_NAME(LTWebViewController)
 @interface LTWebViewController : UIViewController<LTUIWebViewDelegate,LTWKNavigationDelegate,LTWKScriptMessageHandler>
 // UIWebView 、 WKWebView
@@ -31,6 +33,8 @@ NS_SWIFT_NAME(LTWebViewController)
 @property (assign, nonatomic) BOOL showsBackgroundLabel;
 // Background Title. default NO
 @property (nonatomic,readonly,strong) UIView *retryView;
+@property(strong,readonly, nonatomic) UIPanGestureRecognizer* swipePanGesture;
+
 
 - (__nullable id)loadRequest:(NSURLRequest *)request;
 

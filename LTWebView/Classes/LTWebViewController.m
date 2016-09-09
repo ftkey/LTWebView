@@ -7,6 +7,7 @@
 //
 
 #import "LTWebViewController.h"
+
 #ifndef LTWebViewControllerLocalizedString
 #define LTWebViewControllerLocalizedString(key, comment) \
 NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundleWithPath:[[[NSBundle bundleForClass:[LTWebViewController class]] resourcePath] stringByAppendingPathComponent:@"LTWebViewController.bundle"]], comment)
@@ -39,6 +40,9 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
 @property(strong, nonatomic) UIPanGestureRecognizer* swipePanGesture;
 /// If is swiping now.
 @property(assign, nonatomic)BOOL isSwipingBack;
+
+@property(assign, nonatomic)BOOL shouldSnapshot;
+
 @end
 
 @implementation LTWebViewController
@@ -70,7 +74,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     
     // Add web view.
     if (self.webView.isWKWebView) {
-        self.webView.frame = self.view.frame;
+        self.webView.frame = self.view.bounds;
         [self.view addSubview:self.webView];
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_webView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_webView)]];
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_webView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_webView, topLayoutGuide, bottomLayoutGuide)]];
@@ -83,6 +87,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
         [self.view insertSubview:self.backgroundLabel atIndex:0];
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[_backgroundLabel]-8-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_backgroundLabel)]];
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayoutGuide]-10-[_backgroundLabel]-(>=0)-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_backgroundLabel, topLayoutGuide)]];
+        self.webView.frame = self.view.bounds;
         [self.view addSubview:self.webView];
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_webView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_webView)]];
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayoutGuide][_webView][bottomLayoutGuide]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_webView, topLayoutGuide, bottomLayoutGuide)]];
@@ -97,12 +102,8 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     NSMutableURLRequest *requestMutabled = [request mutableCopy];
     requestMutabled.timeoutInterval = _timeoutInternal;
     requestMutabled.cachePolicy = _cachePolicy;
-    if (self.webView.isWKWebView) {
-        return [(WKWebView *)_webView loadRequest:requestMutabled];
-    }else{
-        [(UIWebView *)_webView loadRequest:request];
-        return nil;
-    }
+    return [self.webView loadRequest:requestMutabled];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -173,8 +174,12 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     [_webView stopLoading];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if (_webView.isWKWebView) {
+//        for (NSString* name in _messageHandlerNames) {
+//            [[(WKWebView*)_webView configuration].userContentController removeScriptMessageHandlerForName:name];
+//        }
         _webView.wKUIDelegate = nil;
         _webView.wKNavigationDelegate = nil;
+        
     }else{
         _webView.webViewDelegate = nil;
     }
@@ -255,9 +260,12 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
 
 #pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+
     switch (navigationType) {
         case UIWebViewNavigationTypeLinkClicked: {
-            [self pushCurrentSnapshotViewWithRequest:request];
+            if (!self.webView.isLoading) {
+                [self pushCurrentSnapshotViewWithRequest:request];
+            }
             break;
         }
         case UIWebViewNavigationTypeFormSubmitted: {
@@ -267,6 +275,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
         case UIWebViewNavigationTypeBackForward: {
             break;
         }
+
         case UIWebViewNavigationTypeReload: {
             break;
         }
@@ -291,16 +300,20 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+    self.shouldSnapshot = true;
     [self didFinishLoad];
+//    id _webDocumentView = [webView valueForKey:@"documentView"];
+//    id _webView = [_webDocumentView valueForKey:@"webView"];
+//    WKBackForwardList* _backForwardList = (WKBackForwardList*)[_webView valueForKey:@"backForwardList"];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    self.shouldSnapshot = true;
     [self didFailLoadWithError:error];
 }
 -(void)swipePanGestureHandler:(UIPanGestureRecognizer*)panGesture{
-    NSLog(@"swipePanGestureHandler:");
-    CGPoint translation = [panGesture translationInView:self.webView];
-    CGPoint location = [panGesture locationInView:self.webView];
+    CGPoint translation = [panGesture translationInView:self.view];
+    CGPoint location = [panGesture locationInView:self.view];
     
     if (panGesture.state == UIGestureRecognizerStateBegan) {
         if (location.x <= 50 && translation.x >= 0) {  //开始动画
@@ -313,22 +326,25 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     }
 }
 -(void)pushCurrentSnapshotViewWithRequest:(NSURLRequest*)request{
-    NSURLRequest* lastRequest = (NSURLRequest*)[[self.snapshots lastObject] objectForKey:@"request"];
-    
+//    if(_isWebViewLoaded) {
     // 如果url是很奇怪的就不push
     if ([request.URL.absoluteString isEqualToString:@"about:blank"]) {
         return;
     }
+    if (!([request.URL.scheme isEqualToString:@"http"] || [request.URL.scheme isEqualToString:@"https"] || [request.URL.scheme isEqualToString:@"file"])) {
+        return;
+    }
+    if(!self.shouldSnapshot) {
+        return;
+    }
+    NSURLRequest* lastRequest = (NSURLRequest*)[[self.snapshots lastObject] objectForKey:@"request"];
     //如果url一样就不进行push
     if ([lastRequest.URL.absoluteString isEqualToString:request.URL.absoluteString]) {
         return;
     }
-    
     UIView* currentSnapshotView = [self.view snapshotViewAfterScreenUpdates:YES];
-    [self.snapshots addObject:
-     @{@"request":request,
-       @"snapShotView":currentSnapshotView}
-     ];
+    [self.snapshots addObject:@{@"snapShotView":currentSnapshotView, @"request":request}];
+    self.shouldSnapshot = false;
 }
 
 -(void)startPopSnapshotView{

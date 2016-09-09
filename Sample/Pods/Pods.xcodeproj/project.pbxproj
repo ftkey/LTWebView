@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		203A952BA17988D94367FD4CC915C3E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF1F6D671C390DBB91C8E5A9AEC130 /* Foundation.framework */; };
 		2AAAECCC53877CC3C9DD03DE60D1C129 /* LTWKNavigationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 667938E3685EDCB8135610DD8CA6DFA2 /* LTWKNavigationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B430A3C1D82B1DC0009397F /* LTWKWebViewCookiesHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B430A3A1D82B1DC0009397F /* LTWKWebViewCookiesHandler.h */; };
+		2B430A3D1D82B1DC0009397F /* LTWKWebViewCookiesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B430A3B1D82B1DC0009397F /* LTWKWebViewCookiesHandler.m */; };
 		2C3A18B5877039519EBD82F2C1229677 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF1F6D671C390DBB91C8E5A9AEC130 /* Foundation.framework */; };
 		2ED20E1435D3F717935C890914BAAFC7 /* LTWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9B96D99C520AE99303C94B27728C61E0 /* LTWebViewController.bundle */; };
 		35C55E30047B8168C8BB364978866DFF /* Pods-Demo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BC86D40B890A7B0844F888209CA06F /* Pods-Demo-dummy.m */; };
@@ -48,6 +50,8 @@
 		0C15AF501118B7798CE004FF441405AE /* LTWebView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "LTWebView-dummy.m"; sourceTree = "<group>"; };
 		1899D45E3542C72BABD3745493A66DED /* LTWKWebViewConfiguration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = LTWKWebViewConfiguration.m; sourceTree = "<group>"; };
 		1A237F1378ED1AC03E06BEF3570C8BC0 /* LTWKNavigationDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = LTWKNavigationDelegate.m; sourceTree = "<group>"; };
+		2B430A3A1D82B1DC0009397F /* LTWKWebViewCookiesHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWKWebViewCookiesHandler.h; sourceTree = "<group>"; };
+		2B430A3B1D82B1DC0009397F /* LTWKWebViewCookiesHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWKWebViewCookiesHandler.m; sourceTree = "<group>"; };
 		30AF1F6D671C390DBB91C8E5A9AEC130 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		322419E99883B306EE7EC77959FCC8DF /* Pods-Demo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Demo.modulemap"; sourceTree = "<group>"; };
 		3CD5A30239C90F1B549B4AB9299ECF16 /* Pods-Demo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Demo-frameworks.sh"; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 				1A237F1378ED1AC03E06BEF3570C8BC0 /* LTWKNavigationDelegate.m */,
 				B55958E5B7672C88F6D2FD8F71FEAE81 /* LTWKWebViewConfiguration.h */,
 				1899D45E3542C72BABD3745493A66DED /* LTWKWebViewConfiguration.m */,
+				2B430A3A1D82B1DC0009397F /* LTWKWebViewCookiesHandler.h */,
+				2B430A3B1D82B1DC0009397F /* LTWKWebViewCookiesHandler.m */,
 				D1FD2B4EFCD03A0BE3ED8EC3104DF021 /* LTWKWebViewUIDelegate.h */,
 				0761BE13BB0701C877505FDD415CB4FE /* LTWKWebViewUIDelegate.m */,
 			);
@@ -265,6 +271,7 @@
 			files = (
 				DA3E4E9C1F66016BA7229BBEFD036027 /* LTUIWebViewDelegate.h in Headers */,
 				60585C620196198E2D264762F435A894 /* LTWebView-umbrella.h in Headers */,
+				2B430A3C1D82B1DC0009397F /* LTWKWebViewCookiesHandler.h in Headers */,
 				6CB92BDE07BCB32F3B657CB506CBF5CF /* LTWebView.h in Headers */,
 				63CB99BF9E34C806347979FA39FEBD95 /* LTWebViewController.h in Headers */,
 				2AAAECCC53877CC3C9DD03DE60D1C129 /* LTWKNavigationDelegate.h in Headers */,
@@ -356,6 +363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA02703A45719BE11ABD52F8032D70D2 /* LTUIWebViewDelegate.m in Sources */,
+				2B430A3D1D82B1DC0009397F /* LTWKWebViewCookiesHandler.m in Sources */,
 				9F2A6CC3C6B83F165040386D1890D26E /* LTWebView-dummy.m in Sources */,
 				78635117C41C2B67E8829AE5950701F5 /* LTWebView.m in Sources */,
 				715C9CDB36B6CD7127FE70E47591E1C9 /* LTWebViewController.m in Sources */,

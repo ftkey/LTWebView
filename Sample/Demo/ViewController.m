@@ -25,7 +25,7 @@
 }
 
 -(IBAction)onPush:(id)sender {
-    NSURL * url = [NSURL URLWithString:@"http://baidu.com"];
+    NSURL * url = [NSURL URLWithString:@"https://github.com"];
     LTWebViewController *webVC = [[LTWebViewController alloc] initWithURL:url type:LTWebViewTypeWKWebView title:@"常用电话"];
     
     [self.navigationController pushViewController:webVC animated:YES];

@@ -14,6 +14,12 @@
 #import "LTWKWebViewConfiguration.h"
 NS_ASSUME_NONNULL_BEGIN
 
+
+
+#ifndef LT_WKWebView_USE_Shared_Cookies
+#define LT_WKWebView_USE_Shared_Cookies 1
+#endif
+
 NS_SWIFT_NAME(WebViewType)
 typedef NS_ENUM(NSUInteger,LTWebViewType) {
     LTWebViewTypeWKWebView = 0, //使用WKWebView 来实现(如果系统版本已支持WKWebView)
@@ -38,9 +44,9 @@ NS_SWIFT_NAME(LTWebView)
 - (nullable id)loadData:(NSData *)data MIMEType:(nullable NSString *)MIMEType textEncodingName:(nullable NSString *)textEncodingName baseURL:(nullable NSURL *)baseURL;
 @property (nullable, nonatomic, readonly, copy)   NSString *title;
 @property (nullable, nonatomic, readonly, strong) NSURLRequest *originRequest;
-@property (nullable, nonatomic, readonly, strong) NSURL *currentURL;
+@property (nullable, nonatomic, readonly, strong) NSURL *URL;
 
-@property (nullable, nonatomic, copy,getter = jsDataModelName)   NSString * jsDataModelName;//js注入数据的数据模型，在wkwebView 上有效
+@property (nullable, nonatomic, copy,getter = jsDataModelName) NSString * jsDataModelName;//js注入数据的数据模型，在wkwebView 上有效
 - (__nullable id)reload;
 - (void)stopLoading;
 
