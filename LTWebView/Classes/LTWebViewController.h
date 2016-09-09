@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_NAME(LTWebViewController)
-@interface LTWebViewController : UIViewController
+@interface LTWebViewController : UIViewController<LTUIWebViewDelegate,LTWKNavigationDelegate,LTWKScriptMessageHandler>
 // UIWebView 、 WKWebView
 @property (nonatomic, readonly, strong) LTWebView *webView;
 // Not yet implementation
@@ -23,7 +23,8 @@ NS_SWIFT_NAME(LTWebViewController)
 
 @property (nonatomic,readonly,strong,nullable) NSURL *baseURL;
 @property (nonatomic,readonly,strong,nullable) NSString *baseURLTitle;
-@property (nonatomic,readonly,strong,nullable) NSURL *lastURL;
+// Auto load URL title . default YES
+@property (nonatomic,assign) BOOL shouldAutoloadRequestTitle;
 
 @property (nonatomic,strong,nullable) NSString *userAgent;
 // Background Title. default NO
@@ -32,6 +33,9 @@ NS_SWIFT_NAME(LTWebViewController)
 @property (nonatomic,readonly,strong) UIView *retryView;
 
 - (__nullable id)loadRequest:(NSURLRequest *)request;
+
+- (void)reload;
+- (void)goBack;
 
 - (instancetype)initWithURL:(NSURL *)baseURL type: (LTWebViewType)type title:(NSString * __nullable)title userAgent:(NSString* __nullable)userAgent;
 - (instancetype)initWithURL:(NSURL *)baseURL type: (LTWebViewType)type title:(NSString * __nullable)title;

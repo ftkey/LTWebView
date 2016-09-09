@@ -1,0 +1,6 @@
+framework module LTWebView {
+  umbrella header "LTWebView-umbrella.h"
+
+  export *
+  module * { export * }
+}

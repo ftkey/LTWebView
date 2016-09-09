@@ -12,11 +12,15 @@
 NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundleWithPath:[[[NSBundle bundleForClass:[LTWebViewController class]] resourcePath] stringByAppendingPathComponent:@"LTWebViewController.bundle"]], comment)
 #endif
 
+#ifndef LTWebViewControllerImageName
+#define LTWebViewControllerImageName(name) \
+[NSString stringWithFormat:@"%@/%@",[[[NSBundle bundleForClass:[LTWebViewController class]] bundlePath] stringByAppendingPathComponent:@"LTWebViewController.bundle"],name]
+#endif
+
 @interface LTWebViewController () <LTUIWebViewDelegate,LTWKNavigationDelegate,LTWKScriptMessageHandler>
 @property (nonatomic, strong) LTWebView *webView;
 @property (nonatomic, strong) UIButton *retryView;
 @property (nonatomic, assign) LTWebViewType webViewType;
-@property (nonatomic,strong) NSURL *lastURL;
 /// Navigation back bar button item.
 @property(strong, nonatomic) UIBarButtonItem *navigationBackBarButtonItem;
 /// Navigation close bar button item.
@@ -51,18 +55,14 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
         _userAgent = userAgent;
         _cachePolicy =  NSURLRequestUseProtocolCachePolicy;
         _showsBackgroundLabel = NO;
+        _shouldAutoloadRequestTitle = YES;
         self.automaticallyAdjustsScrollViewInsets = YES;
         self.extendedLayoutIncludesOpaqueBars = YES;
     }
     return self;
     
 }
-- (void)reloadOriginRequest {
-    
-}
-- (void)reloadCurrentRequest {
-    
-}
+
 - (void)setupSubviews {
     // Add from label and constraints.
     id topLayoutGuide = self.topLayoutGuide;
@@ -94,7 +94,6 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     //    [self.view bringSubviewToFront:self.progressView];
 }
 - (__nullable id)loadRequest:(NSURLRequest *)request{
-    self.lastURL = request.URL;
     NSMutableURLRequest *requestMutabled = [request mutableCopy];
     requestMutabled.timeoutInterval = _timeoutInternal;
     requestMutabled.cachePolicy = _cachePolicy;
@@ -107,26 +106,23 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
+
     [self setupSubviews];
     
     if (_baseURL) {
         NSURLRequest * request = [[NSURLRequest alloc]initWithURL:_baseURL];
-        self.lastURL = _baseURL;
         [self loadRequest:request];
-        self.view.backgroundColor = [UIColor whiteColor];
     }
     else {
-        
         self.view.backgroundColor = [UIColor colorWithRed:0.180 green:0.192 blue:0.196 alpha:1.00];
-        
     }
     _backgroundLabel.textColor = [UIColor colorWithRed:0.180 green:0.192 blue:0.196 alpha:1.00];
-    
+    self.navigationItem.title = self.baseURLTitle;
     [self updateNavigationItems];
     
     // Config navigation item
-    self.navigationItem.leftItemsSupplementBackButton = YES;
+//    self.navigationItem.leftItemsSupplementBackButton = YES;
     
 }
 
@@ -151,7 +147,6 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     [super viewDidDisappear:animated];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     [self.navigationItem setLeftBarButtonItems:nil animated:NO];
 }
@@ -184,7 +179,8 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
         _webView.webViewDelegate = nil;
     }
 }
-- (void)didStartLoad{
+- (void)didStartLoad {
+    
     _backgroundLabel.text = LTWebViewControllerLocalizedString(@"Loading", @"Loading");
     self.navigationItem.title = LTWebViewControllerLocalizedString(@"Loading", @"Loading");
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -203,12 +199,9 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     
     [self updateNavigationItems];
     
-    NSString *title = [_webView title];
-    if (title.length > 10) {
-        title = [[title substringToIndex:9] stringByAppendingString:@"…"];
-    }
-    self.navigationItem.title = title;
-    self.navigationItem.title = title?:LTWebViewControllerLocalizedString(@"Browsing the web", @"Browsing the web");
+    [self updateNavigationItemTitle];
+
+    
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *bundle = ([infoDictionary objectForKey:@"CFBundleDisplayName"]?:[infoDictionary objectForKey:@"CFBundleName"])?:[infoDictionary objectForKey:@"CFBundleIdentifier"];
     NSString *host;
@@ -224,8 +217,9 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
         }
     }
     _backgroundLabel.text = [NSString stringWithFormat:@"%@%@",LTWebViewControllerLocalizedString(@"Load failed:", nil) , error.localizedDescription];
-    self.navigationItem.title = LTWebViewControllerLocalizedString(@"Load failed", nil);
     [self updateNavigationItems];
+    [self updateNavigationItemTitle];
+
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
@@ -259,33 +253,8 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
 - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView NS_AVAILABLE(10_11, 9_0) {
 }
 
-- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {
-    // Should not pop. It appears clicked the back bar button item. We should decide the action according to the content of web view.
-    if ([self.navigationController.topViewController isKindOfClass:[LTWebViewController class]]) {
-        LTWebViewController* webVC = (LTWebViewController*)self.navigationController.topViewController;
-        // If web view can go back.
-        if (webVC.webView.canGoBack) {
-            // Stop loading if web view is loading.
-            if (webVC.webView.isLoading) {
-                [webVC.webView stopLoading];
-            }
-            // Go back to the last page if exist.
-            [webVC.webView goBack];
-            // Should not pop items.
-            return NO;
-        }else{
-            // Pop view controlers directly.
-            return YES;
-        }
-    }else{
-        // Pop view controllers directly.
-        return YES;
-    }
-}
-
 #pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    // URL actions
     switch (navigationType) {
         case UIWebViewNavigationTypeLinkClicked: {
             [self pushCurrentSnapshotViewWithRequest:request];
@@ -329,6 +298,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     [self didFailLoadWithError:error];
 }
 -(void)swipePanGestureHandler:(UIPanGestureRecognizer*)panGesture{
+    NSLog(@"swipePanGestureHandler:");
     CGPoint translation = [panGesture translationInView:self.webView];
     CGPoint location = [panGesture locationInView:self.webView];
     
@@ -354,7 +324,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
         return;
     }
     
-    UIView* currentSnapshotView = [self.webView snapshotViewAfterScreenUpdates:YES];
+    UIView* currentSnapshotView = [self.view snapshotViewAfterScreenUpdates:YES];
     [self.snapshots addObject:
      @{@"request":request,
        @"snapShotView":currentSnapshotView}
@@ -372,7 +342,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     //create a center of scrren
     CGPoint center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
     
-    self.currentSnapshotView = [self.webView snapshotViewAfterScreenUpdates:YES];
+    self.currentSnapshotView = [self.view snapshotViewAfterScreenUpdates:YES];
     
     //add shadows just like UINavigationController
     self.currentSnapshotView.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -388,6 +358,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     self.previousSnapshotView.center = center;
     self.previousSnapshotView.alpha = 1;
     self.view.backgroundColor = [UIColor colorWithRed:0.180 green:0.192 blue:0.196 alpha:1.00];
+    
     
     [self.view addSubview:self.previousSnapshotView];
     [self.view addSubview:self.swipingBackgoundView];
@@ -500,29 +471,71 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     [_retryView addTarget:self action:@selector(reload) forControlEvents:UIControlEventTouchUpInside];
     return _retryView;
 }
-- (void)reload {
-    if (self.lastURL) {
-        NSURLRequest * request = [[NSURLRequest alloc]initWithURL:_baseURL];
-        [self loadRequest:request];
+-(UIView*)swipingBackgoundView{
+    if (!_swipingBackgoundView) {
+        _swipingBackgoundView = [[UIView alloc] initWithFrame:self.view.bounds];
+        _swipingBackgoundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
     }
+    return _swipingBackgoundView;
 }
+
+-(NSMutableArray*)snapshots{
+    if (!_snapshots) {
+        _snapshots = [NSMutableArray array];
+    }
+    return _snapshots;
+}
+
+-(BOOL)isSwipingBack{
+    if (!_isSwipingBack) {
+        _isSwipingBack = NO;
+    }
+    return _isSwipingBack;
+}
+
+-(UIPanGestureRecognizer*)swipePanGesture{
+    if (!_swipePanGesture) {
+        _swipePanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(swipePanGestureHandler:)];
+    }
+    return _swipePanGesture;
+}
+- (void)reload {
+    [self.webView reload];
+}
+- (void)goBack {
+    [self navigationItemHandleBack:nil];
+}
+
 - (void)setShowsBackgroundLabel:(BOOL)showsBackgroundLabel {
     _showsBackgroundLabel = showsBackgroundLabel;
     self.backgroundLabel.hidden = !showsBackgroundLabel;
 }
+- (void)updateNavigationItemTitle {
+    NSString *title = self.baseURLTitle;
+    if (self.shouldAutoloadRequestTitle) {
+        title = [_webView title];
+    }
+    if (title.length > 10) {
+        title = [[title substringToIndex:9] stringByAppendingString:@"…"];
+    }
+    self.navigationItem.title = title;
+}
 - (void)updateNavigationItems {
-    [self.navigationItem setLeftBarButtonItems:nil animated:NO];
     if (self.webView.canGoBack) {// Web view can go back means a lot requests exist.
         UIBarButtonItem *spaceButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
         spaceButtonItem.width = -6.5;
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-        if (self.navigationController.viewControllers.count == 1) {
-            [self.navigationItem setLeftBarButtonItems:@[spaceButtonItem, self.navigationBackBarButtonItem, self.navigationCloseBarButtonItem] animated:NO];
-        } else {
-            [self.navigationItem setLeftBarButtonItems:@[self.navigationCloseBarButtonItem] animated:NO];
+        if (!self.webView.isWKWebView) {
+            if(![self.webView.gestureRecognizers containsObject:self.swipePanGesture]) {
+                [self.webView addGestureRecognizer:self.swipePanGesture];
+            }
         }
+         [self.navigationItem setLeftBarButtonItems:@[spaceButtonItem, self.navigationBackBarButtonItem, self.navigationCloseBarButtonItem] animated:NO];
     } else {
         self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+        if (!self.webView.isWKWebView) {
+            [self.webView removeGestureRecognizer:self.swipePanGesture];
+        }
         [self.navigationItem setLeftBarButtonItems:nil animated:NO];
     }
 }
@@ -540,7 +553,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
 
 - (UIBarButtonItem *)navigationBackBarButtonItem {
     if (_navigationBackBarButtonItem) return _navigationBackBarButtonItem;
-    UIImage* backItemImage = [[[UINavigationBar appearance] backIndicatorImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]?:[[UIImage imageNamed:@"LTWebViewController.bundle/backItemImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImage* backItemImage = [[[UINavigationBar appearance] backIndicatorImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]?:[[UIImage imageNamed:LTWebViewControllerImageName(@"backItemImage")] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIGraphicsBeginImageContextWithOptions(backItemImage.size, NO, backItemImage.scale);
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextTranslateCTM(context, 0, backItemImage.size.height);
@@ -552,7 +565,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     CGContextFillRect(context, rect);
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    UIImage* backItemHlImage = newImage?:[[UIImage imageNamed:@"LTWebViewController.bundle/backItemImage-hl"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImage* backItemHlImage = newImage?:[[UIImage imageNamed:LTWebViewControllerImageName(@"backItemImage-hl")] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIButton* backButton = [UIButton buttonWithType:UIButtonTypeSystem];
     NSDictionary *attr = [[UIBarButtonItem appearance] titleTextAttributesForState:UIControlStateNormal];
     if (attr) {

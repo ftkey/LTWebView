@@ -1,0 +1,9 @@
+platform:ios, '8.0'
+
+#inhibit_all_warnings!
+use_frameworks!
+
+target 'Demo' do
+    pod 'LTWebView' , :path => '../LTWebView.podspec'  #指定podspec文件
+
+end

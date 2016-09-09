@@ -24,9 +24,6 @@
 @property (nonatomic, copy)   NSString     * title;
 
 @property (nonatomic, strong) NSMutableURLRequest * originRequest;
-@property (nonatomic, strong) NSMutableURLRequest * currentRequest;
-
-
 
 @end
 
@@ -39,15 +36,19 @@
     if(_isWKWebView)
     {
         WKWebView* webView = _webView;
-        webView.UIDelegate = nil;
-        webView.navigationDelegate = nil;
-        
         [webView removeObserver:self forKeyPath:@"title"];
+        [self setWKUIDelegate:nil];
+        [self setWKNavigationDelegate:nil];
+        webView.navigationDelegate = nil;
+        webView.UIDelegate = nil;
+
     }
     else
     {
         UIWebView* webView = _webView;
+        [self setWebViewDelegate:nil];
         webView.delegate = nil;
+
     }
     [_webView scrollView].delegate = nil;
     [_webView stopLoading];
@@ -108,6 +109,8 @@
 }
 - (void)initUIWebView{
     UIWebView * webView = [[UIWebView alloc]initWithFrame:self.bounds];
+    webView.opaque = NO;
+    webView.backgroundColor = [UIColor clearColor];
     _webView = webView;
     [self addSubview:webView];
     webView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -198,8 +201,14 @@
     ((WKWebView *)_webView).navigationDelegate = wKNavigationDelegate;
 }
 - (void)setWebViewDelegate:(LTUIWebViewDelegate *)webViewDelegate {
+    if (_webViewDelegate) {
+        [_webViewDelegate removeObserver:self forKeyPath:@"title"];
+    }
     _webViewDelegate = webViewDelegate;
     ((UIWebView *)_webView).delegate = webViewDelegate;
+    if (_webViewDelegate) {
+        [_webViewDelegate addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:nil];
+    }
 }
 
 #pragma mark - 属性方法
@@ -216,18 +225,12 @@
         _jsDataModelName = nil;
     }
 }
-- (NSURLRequest *)originRequest{
+
+- (NSURL *)currentURL{
     if (_isWKWebView) {
-        return _originRequest;
+        return [[[(WKWebView *)_webView backForwardList] currentItem] URL];
     }else{
-        return [(UIWebView *)_webView request];
-    }
-}
-- (NSURLRequest *)currentRequest{
-    if (_isWKWebView) {
-        return _currentRequest;
-    }else{
-        return [(UIWebView *)_webView request];
+        return [[(UIWebView *)_webView request] URL];
     }
 }
 - (BOOL)canGoBack{
@@ -306,8 +309,6 @@
 #pragma mark - 公共接口
 - (__nullable id)loadRequest:(NSURLRequest *)request{
     self.originRequest  = [request mutableCopy];
-    self.currentRequest = [request mutableCopy];
-    
     if (_isWKWebView) {
         return [(WKWebView *)_webView loadRequest:request];
     }else{

@@ -38,7 +38,7 @@ NS_SWIFT_NAME(LTWebView)
 - (nullable id)loadData:(NSData *)data MIMEType:(nullable NSString *)MIMEType textEncodingName:(nullable NSString *)textEncodingName baseURL:(nullable NSURL *)baseURL;
 @property (nullable, nonatomic, readonly, copy)   NSString *title;
 @property (nullable, nonatomic, readonly, strong) NSURLRequest *originRequest;
-@property (nullable, nonatomic, readonly, strong) NSURLRequest *currentRequest;
+@property (nullable, nonatomic, readonly, strong) NSURL *currentURL;
 
 @property (nullable, nonatomic, copy,getter = jsDataModelName)   NSString * jsDataModelName;//js注入数据的数据模型，在wkwebView 上有效
 - (__nullable id)reload;

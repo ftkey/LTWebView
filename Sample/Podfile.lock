@@ -1,0 +1,16 @@
+PODS:
+  - LTWebView (1.1)
+
+DEPENDENCIES:
+  - LTWebView (from `../LTWebView.podspec`)
+
+EXTERNAL SOURCES:
+  LTWebView:
+    :path: "../LTWebView.podspec"
+
+SPEC CHECKSUMS:
+  LTWebView: 6517d632b89534e45ca8492f750a8ba3785c998c
+
+PODFILE CHECKSUM: 7e0226f3ca2967db48a50b2da5e0ac48846e18fc
+
+COCOAPODS: 1.0.1

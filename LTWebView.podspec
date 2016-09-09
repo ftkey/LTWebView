@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "LTWebView"
-  s.version      = "1.1"
+  s.version      = "1.2"
   s.summary      = "LTWebView LTWebViewController is a UIWebView/WKWebView Controller"
   s.homepage     = "https://futao.me/"
   s.license      = "Apache License, Version 2.0"
@@ -12,5 +12,4 @@ Pod::Spec.new do |s|
   s.resource  = "LTWebView/Resources/LTWebViewController.bundle"  
   s.frameworks = "Foundation", "UIKit", "WebKit"
   s.requires_arc = true
-  s.dependency "AXNavigationBackItemInjection"
 end
