@@ -324,12 +324,12 @@
 #else
         NSMutableURLRequest *mreq = [request mutableCopy];
 #endif
-        self.originRequest = mreq;
+        _originRequest = mreq;
         return [(WKWebView *)_webView loadRequest:self.originRequest];
     }else{
         NSMutableURLRequest *mreq = [request mutableCopy];
         mreq.HTTPShouldHandleCookies = YES;
-        self.originRequest = mreq;
+        _originRequest = mreq;
         [(UIWebView *)_webView loadRequest:self.originRequest];
         return nil;
     }

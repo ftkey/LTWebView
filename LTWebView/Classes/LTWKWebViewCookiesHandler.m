@@ -90,13 +90,13 @@
     for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
         // Don't even bother with values containing a `'`
         if ([cookie.name rangeOfString:@"'"].location != NSNotFound) {
-            //NSLog(@"Skipping %@ because it contains a '", cookie.properties);
+//            NSLog(@"Skipping %@ because it contains a '", cookie.properties);
             continue;
         }
         
-        // Is the cookie for current domain?
+//        // Is the cookie for current domain?
         if (![validDomain hasSuffix:cookie.domain] && ![cookie.domain hasSuffix:validDomain]) {
-            //NSLog(@"Skipping %@ (because not %@)", cookie.properties, validDomain);
+//            NSLog(@"Skipping %@ (because not %@)", cookie.properties, validDomain);
             continue;
         }
         
@@ -111,9 +111,10 @@
     }
     
     NSString *header = [array componentsJoinedByString:@";"];
-    [request setValue:header forHTTPHeaderField:@"Cookie"];
-    
-    return request;
+    NSLog(header);
+    [request setValue:header forHTTPHeaderField:@"Set-Cookie"];
+
+    return [request copy];
 }
 @end
 
