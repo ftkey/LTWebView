@@ -74,7 +74,9 @@
 }
 - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView  {
     if ([self.forwardDelegate respondsToSelector:@selector(webViewWebContentProcessDidTerminate:)]) {
-        return [self.forwardDelegate webViewWebContentProcessDidTerminate:webView ];
+        if (@available(iOS 9_0, *)) {
+            return [self.forwardDelegate webViewWebContentProcessDidTerminate:webView ];
+        }
     }
 }
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {

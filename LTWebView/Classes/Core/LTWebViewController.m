@@ -174,14 +174,10 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     [_webView stopLoading];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if (_webView.isWKWebView) {
-//        for (NSString* name in _messageHandlerNames) {
-//            [[(WKWebView*)_webView configuration].userContentController removeScriptMessageHandlerForName:name];
-//        }
-        _webView.wKUIDelegate = nil;
-        _webView.wKNavigationDelegate = nil;
+        _webView.wkNavigationDelegate.forwardDelegate = nil;
         
     }else{
-        _webView.webViewDelegate = nil;
+        _webView.webViewDelegate.forwardDelegate = nil;
     }
 }
 - (void)didStartLoad {
@@ -454,7 +450,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     if (_webView) return _webView;
     _webView = [[LTWebView alloc] initWithFrame:CGRectZero webViewType:_webViewType];
     if (_webView.isWKWebView) {
-        _webView.wKNavigationDelegate.forwardDelegate = self;
+        _webView.wkNavigationDelegate.forwardDelegate = self;
     }else{
         _webView.webViewDelegate.forwardDelegate = self;
     }

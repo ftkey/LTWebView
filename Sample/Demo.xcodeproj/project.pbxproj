@@ -13,6 +13,8 @@
 		2B59847A1D815EF4004ADC90 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B5984781D815EF4004ADC90 /* Main.storyboard */; };
 		2B59847C1D815EF4004ADC90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B59847B1D815EF4004ADC90 /* Assets.xcassets */; };
 		2B59847F1D815EF4004ADC90 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B59847D1D815EF4004ADC90 /* LaunchScreen.storyboard */; };
+		2B6C7B9020C0D3C10069919B /* ViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6C7B8F20C0D3C10069919B /* ViewController2.m */; };
+		2BDCD08B20BFE6AF007D7BF4 /* NavtiveInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDCD08A20BFE6AF007D7BF4 /* NavtiveInterface.m */; };
 		B4DB88192DF65827B1631A09 /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE7D3BE59EC27FEF529911FC /* Pods_Demo.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +29,10 @@
 		2B59847B1D815EF4004ADC90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B59847E1D815EF4004ADC90 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B5984801D815EF4004ADC90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B6C7B8E20C0D3C10069919B /* ViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController2.h; sourceTree = "<group>"; };
+		2B6C7B8F20C0D3C10069919B /* ViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController2.m; sourceTree = "<group>"; };
+		2BDCD08920BFE6AF007D7BF4 /* NavtiveInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NavtiveInterface.h; sourceTree = "<group>"; };
+		2BDCD08A20BFE6AF007D7BF4 /* NavtiveInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavtiveInterface.m; sourceTree = "<group>"; };
 		5B75DE4D542EF98753AF5747 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		BE7D3BE59EC27FEF529911FC /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF3AFCF2FDAAD4B0C2B85E41 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -69,6 +75,10 @@
 				2B5984731D815EF4004ADC90 /* AppDelegate.m */,
 				2B5984751D815EF4004ADC90 /* ViewController.h */,
 				2B5984761D815EF4004ADC90 /* ViewController.m */,
+				2B6C7B8E20C0D3C10069919B /* ViewController2.h */,
+				2B6C7B8F20C0D3C10069919B /* ViewController2.m */,
+				2BDCD08920BFE6AF007D7BF4 /* NavtiveInterface.h */,
+				2BDCD08A20BFE6AF007D7BF4 /* NavtiveInterface.m */,
 				2B5984781D815EF4004ADC90 /* Main.storyboard */,
 				2B59847B1D815EF4004ADC90 /* Assets.xcassets */,
 				2B59847D1D815EF4004ADC90 /* LaunchScreen.storyboard */,
@@ -115,7 +125,6 @@
 				2B5984691D815EF4004ADC90 /* Frameworks */,
 				2B59846A1D815EF4004ADC90 /* Resources */,
 				891C41E0676D6EDA1CF6E434 /* [CP] Embed Pods Frameworks */,
-				7CE03217C3692A6BEBD5FD25 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -132,11 +141,13 @@
 		2B5984641D815EF4004ADC90 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Ftkey;
 				TargetAttributes = {
 					2B59846B1D815EF4004ADC90 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = UF3R9VSVWA;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -178,28 +189,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Demo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		7CE03217C3692A6BEBD5FD25 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Demo/Pods-Demo-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		891C41E0676D6EDA1CF6E434 /* [CP] Embed Pods Frameworks */ = {
@@ -208,9 +207,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Demo/Pods-Demo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/LTWebView/LTWebView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LTWebView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -226,7 +228,9 @@
 			files = (
 				2B5984771D815EF4004ADC90 /* ViewController.m in Sources */,
 				2B5984741D815EF4004ADC90 /* AppDelegate.m in Sources */,
+				2B6C7B9020C0D3C10069919B /* ViewController2.m in Sources */,
 				2B5984711D815EF4004ADC90 /* main.m in Sources */,
+				2BDCD08B20BFE6AF007D7BF4 /* NavtiveInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,13 +265,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -289,7 +303,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -306,13 +320,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -328,7 +352,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -341,10 +365,14 @@
 			baseConfigurationReference = DF3AFCF2FDAAD4B0C2B85E41 /* Pods-Demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = UF3R9VSVWA;
 				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.futao.ios.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ea1a8f84-8196-494a-8afb-8a5b9c9e44d9";
+				PROVISIONING_PROFILE_SPECIFIER = dsthing.qq.all.dev;
 			};
 			name = Debug;
 		};
@@ -353,10 +381,13 @@
 			baseConfigurationReference = 5B75DE4D542EF98753AF5747 /* Pods-Demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.futao.ios.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

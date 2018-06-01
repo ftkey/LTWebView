@@ -25,6 +25,13 @@
 
 +(instancetype)defaultConfiguration {
     return [[[self class] alloc] init];
+//    static id _defaultConfiguration;
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        _defaultConfiguration = [[[self class] alloc] init];
+//
+//    });
+//    return _defaultConfiguration;
 }
 
 - (instancetype)init

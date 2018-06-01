@@ -11,18 +11,24 @@
 #import "LTWKWebViewUIDelegate.h"
 #import "LTWKNavigationDelegate.h"
 #import "LTWKWebViewConfiguration.h"
-#if LT_WKWebView_USE_Shared_Cookies
+
+#if LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES
 #import "LTWKWebViewCookiesHandler.h"
 #endif
 
-@import WebKit;
+#if LT_WEBVIEW_USE_WK_IOS8_CUSTOM_USERAGENT
 @interface WKWebView (Privates)
 @property (copy, setter=_setCustomUserAgent:) NSString *_customUserAgent;
 @property (copy, setter=_setApplicationNameForUserAgent:) NSString *_applicationNameForUserAgent;
 @property (nonatomic, readonly) NSString *_userAgent;
 @end
+#endif
 
 @interface LTWebView()
+@property (nonatomic,strong ) id webView;
+@property (nonatomic,strong) LTUIWebViewDelegate *webViewDelegate;
+@property (nonatomic,strong) LTWKWebViewUIDelegate *wkUIDelegate;//WK的UI 代理
+@property (nonatomic,strong) LTWKNavigationDelegate *wkNavigationDelegate;//WK的UI 代理
 @property (nonatomic,assign)  LTWebViewType type;
 @property (nonatomic, copy)   NSString     * title;
 
@@ -33,28 +39,26 @@
 
 
 @implementation LTWebView
-#define LTWebView_IS_IOS9_AND_HIGHER   ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
-- (void)dealloc
-{
+- (void)dealloc {
     if(_isWKWebView)
     {
         WKWebView* webView = _webView;
-#if LT_WKWebView_USE_Shared_Cookies
+#if LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES
         [[LTWKWebViewCookiesHandler defaultCookiesHandler] setWebView:nil];
 #endif
         [webView removeObserver:self forKeyPath:@"title"];
-        [self setWKUIDelegate:nil];
-        [self setWKNavigationDelegate:nil];
+        [self setWkUIDelegate:nil];
+        [self setWkNavigationDelegate:nil];
         webView.navigationDelegate = nil;
         webView.UIDelegate = nil;
-
+        
     }
     else
     {
         UIWebView* webView = _webView;
         [self setWebViewDelegate:nil];
         webView.delegate = nil;
-
+        
     }
     [_webView scrollView].delegate = nil;
     [_webView stopLoading];
@@ -96,10 +100,9 @@
 - (void)initWKWebView{
     LTWKWebViewConfiguration* config = [LTWKWebViewConfiguration defaultConfiguration];
     WKWebView * webView = [[WKWebView alloc] initWithFrame:self.bounds configuration:config];
-#if LT_WKWebView_USE_Shared_Cookies
+#if LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES
     [[LTWKWebViewCookiesHandler defaultCookiesHandler] setWebView:webView];
     [[LTWKWebViewCookiesHandler defaultCookiesHandler] addCookieOutScriptWithController:config.userContentController];
-//    [[LTWKWebViewCookiesHandler defaultCookiesHandler] addCookieInScriptWithController:config.userContentController];
 #endif
     _webView = webView;
     [self addSubview:webView];
@@ -109,8 +112,8 @@
     [webView addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:nil];
     [webView setAllowsBackForwardNavigationGestures:self.allowsBackForwardNavigationGestures];
     [[webView configuration] setAllowsInlineMediaPlayback:self.allowsInlineMediaPlayback];
-    self.wKUIDelegate = [[LTWKWebViewUIDelegate alloc] init];
-    self.wKNavigationDelegate =  [[LTWKNavigationDelegate alloc] init];
+    self.wkUIDelegate = [[LTWKWebViewUIDelegate alloc] init];
+    self.wkNavigationDelegate =  [[LTWKNavigationDelegate alloc] init];
     _isWKWebView = YES;
     if (!_webView) {
         [self initUIWebView];
@@ -128,40 +131,46 @@
     [webView setScalesPageToFit:YES];
     [webView setAllowsInlineMediaPlayback:YES];
     self.webViewDelegate = [[LTUIWebViewDelegate alloc] init];
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
-    webView.allowsLinkPreview = YES;
-#endif
+    if (@available(iOS 9.0, *)) {
+        webView.allowsLinkPreview = YES;
+    }
     _isWKWebView = NO;
 }
 - (void)setCustomUserAgent:(NSString*)customUserAgent {
     if (_isWKWebView) {
         @try {
-            if (LTWebView_IS_IOS9_AND_HIGHER) {
+            if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {
                 [_webView setCustomUserAgent:customUserAgent];
             }else{
+#if LT_WEBVIEW_USE_WK_IOS8_CUSTOM_USERAGENT
                 [_webView _setCustomUserAgent:customUserAgent];
+#endif
             }
         }@catch (NSException *exception) { }
     }else {
         @try {
             id webDocumentView = [_webView valueForKey:@"documentView"];
             id webView = [webDocumentView valueForKey:@"webView"];
-
+            
             [webView setCustomUserAgent:customUserAgent];
         }@catch (NSException *exception) { }
     }
 }
 - (NSString *)customUserAgent {
     if (_isWKWebView) {
-        if (LTWebView_IS_IOS9_AND_HIGHER) {
+        if (@available(iOS 9.0, *)) {
             return [_webView customUserAgent];
-        }else{
-           return [_webView _customUserAgent];
+        }else {
+#if LT_WEBVIEW_USE_WK_IOS8_CUSTOM_USERAGENT
+            return [_webView _customUserAgent];
+#else
+            return @"";
+#endif
         }
     }else {
         id webDocumentView = [_webView valueForKey:@"documentView"];
         id webView = [webDocumentView valueForKey:@"webView"];
-        return [webView customUserAgent];
+        return  [webView performSelector:@selector(customUserAgent) withObject:nil];
     }
 }
 - (void)setCookieWithCooksArray:(NSArray<NSString*> *)array domain: (NSString *) domain forRequest: (NSMutableURLRequest *) request {
@@ -170,7 +179,7 @@
     __block NSString * cookieForHeader   = @"";
     [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[NSString class]]) {
-            if (_isWKWebView) {
+            if (self.isWKWebView) {
                 cookieForDocument = [cookieForDocument stringByAppendingString:[NSString stringWithFormat:@"document.cookie = '%@';",obj]];
                 cookieForHeader = [cookieForHeader stringByAppendingString:[NSString stringWithFormat:@"%@;",obj]];
             }else{
@@ -202,13 +211,13 @@
     }
 }
 
-- (void)setWKUIDelegate:(LTWKWebViewUIDelegate *)wKUIDelegate {
-    _wKUIDelegate = wKUIDelegate;
+- (void)setWkUIDelegate:(LTWKWebViewUIDelegate *)wKUIDelegate {
+    _wkUIDelegate = wKUIDelegate;
     ((WKWebView *)_webView).UIDelegate = wKUIDelegate;
 }
-- (void)setWKNavigationDelegate:(LTWKNavigationDelegate *)wKNavigationDelegate {
-    _wKNavigationDelegate = wKNavigationDelegate;
-    ((WKWebView *)_webView).navigationDelegate = wKNavigationDelegate;
+- (void)setWkNavigationDelegate:(LTWKNavigationDelegate *)wkNavigationDelegate {
+    _wkNavigationDelegate = wkNavigationDelegate;
+    ((WKWebView *)_webView).navigationDelegate = wkNavigationDelegate;
 }
 - (void)setWebViewDelegate:(LTUIWebViewDelegate *)webViewDelegate {
     if (_webViewDelegate) {
@@ -229,7 +238,7 @@
 }
 - (void)setJsDataModelName: (NSString *) jsDataModelName{
     if (jsDataModelName.length > 0 && [_jsDataModelName isEqualToString:jsDataModelName] && _webView && [_webView isMemberOfClass:[WKWebView class]]) {
-        [((WKWebView *)_webView).configuration.userContentController addScriptMessageHandler:self.wKNavigationDelegate name:jsDataModelName];
+        [((WKWebView *)_webView).configuration.userContentController addScriptMessageHandler:self.wkNavigationDelegate name:jsDataModelName];
         _jsDataModelName = jsDataModelName;
     }else{
         _jsDataModelName = nil;
@@ -319,7 +328,7 @@
 #pragma mark - 公共接口
 - (__nullable id)loadRequest:(NSURLRequest *)request{
     if (_isWKWebView) {
-#if LT_WKWebView_USE_Shared_Cookies
+#if LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES
         NSMutableURLRequest *mreq = [[LTWKWebViewCookiesHandler preCookiesRequest:request] mutableCopy];
 #else
         NSMutableURLRequest *mreq = [request mutableCopy];
@@ -345,7 +354,11 @@
 
 - (__nullable id)loadData:(NSData *)data MIMEType:(NSString *)MIMEType textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL{
     if (_isWKWebView && [(WKWebView *)_webView respondsToSelector:@selector(loadData:MIMEType:characterEncodingName:baseURL:)]) {
-        return [(WKWebView *)_webView loadData:data MIMEType:MIMEType characterEncodingName:textEncodingName baseURL:baseURL];
+        if (@available(iOS 9.0, *)) {
+            return [(WKWebView *)_webView loadData:data MIMEType:MIMEType characterEncodingName:textEncodingName baseURL:baseURL];
+        }else {
+            return [(WKWebView *)_webView loadHTMLString:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] baseURL:baseURL];
+        }
     }else{
         [(UIWebView *)_webView loadData:data MIMEType:MIMEType textEncodingName: textEncodingName baseURL:baseURL];
         return nil;
@@ -391,9 +404,6 @@
     }
 }
 + (void)clearWebCacheCompletion:(dispatch_block_t)completion {
-    NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
-    NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
-    [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:completion];
     
     NSString *libraryDir = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES)[0];
     NSString *bundleId  =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
@@ -408,8 +418,62 @@
     
     /* iOS7.0 WebView Cache path */
     [[NSFileManager defaultManager] removeItemAtPath:webKitFolderInCachesfs error:&error];
+    [self cleanWebCookiesOfStorage];
     if (completion) {
         completion();
     }
 }
+// 获取当前系统中已有的Cookies;
++ (nullable NSArray<NSHTTPCookie *>*)getCurrentWebCookiesWithBaseURL:(NSURL*)baseURL {
+    NSArray<NSHTTPCookie *> *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:baseURL];
+    return cookies;
+}
+// 获取当前系统中已有的Cookies;
++ (nullable NSArray<NSHTTPCookie *>*)getCurrentWebAllCookies {
+    NSArray<NSHTTPCookie *> *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
+    return cookies;
+}
+
++ (void)syncWebCookiesFromStorage {
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSData *cookiesOfStorage =  [[NSUserDefaults standardUserDefaults] objectForKey: LT_WEBVIEW_COOKIES_STRAGE_KEY_NAME];
+    if (cookiesOfStorage) {
+        NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesOfStorage];
+        if (cookies) {
+            for (NSHTTPCookie *cookie in cookies) {
+                if ([cookie.name rangeOfString:@"'"].location != NSNotFound) {
+                    continue;
+                }
+                [cookieStorage setCookie:cookie];
+            }
+        }
+    }
+    
+}
+
+// 存储Cookies;
++ (void)syncWebCookiesToStorage {
+    NSArray<NSHTTPCookie *> *cookies =  [self getCurrentWebAllCookies];
+    if (cookies) {
+        NSData *savecookiesData = [NSKeyedArchiver archivedDataWithRootObject:cookies];
+        if(savecookiesData){
+            [[NSUserDefaults standardUserDefaults] setObject:savecookiesData forKey: LT_WEBVIEW_COOKIES_STRAGE_KEY_NAME];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
+}
+// 清理Cookies;
++ (void)cleanWebCookiesOfStorage {
+    
+    NSHTTPCookieStorage *cookieStrage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *cookie in [cookieStrage cookies]) {
+        [cookieStrage deleteCookie:cookie];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: LT_WEBVIEW_COOKIES_STRAGE_KEY_NAME];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+}
 @end
+
+
+

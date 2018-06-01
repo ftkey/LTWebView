@@ -7,18 +7,31 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
 #import "LTUIWebViewDelegate.h"
 #import "LTWKWebViewUIDelegate.h"
 #import "LTWKNavigationDelegate.h"
 #import "LTWKWebViewConfiguration.h"
+
+
 NS_ASSUME_NONNULL_BEGIN
 
-
-
-#ifndef LT_WKWebView_USE_Shared_Cookies
-#define LT_WKWebView_USE_Shared_Cookies 1
+// 是否支持IOS8的CustomUseragent
+#ifndef LT_WEBVIEW_USE_WK_IOS8_CUSTOM_USERAGENT
+#define LT_WEBVIEW_USE_WK_IOS8_CUSTOM_USERAGENT 1
 #endif
+
+// WK默认不支持POST方式的Cookies共享
+#ifndef LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES
+#define LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES 1
+#endif
+
+
+#ifndef LT_WEBVIEW_COOKIES_STRAGE_KEY_NAME
+#define LT_WEBVIEW_COOKIES_STRAGE_KEY_NAME @"lt.webview.cookies.strage.key"
+#endif
+
 
 NS_SWIFT_NAME(WebViewType)
 typedef NS_ENUM(NSUInteger,LTWebViewType) {
@@ -26,14 +39,13 @@ typedef NS_ENUM(NSUInteger,LTWebViewType) {
     LTWebViewTypeUIWebView = 1, //使用UIWebView 来实现
     
 };
-
 NS_SWIFT_NAME(LTWebView)
 @interface LTWebView : UIView
 //内部使用的webView,UIWebView or WKWebView
-@property (nonatomic,strong) id webView;
-@property (nonatomic,strong,nullable) LTUIWebViewDelegate *webViewDelegate;
-@property (nonatomic,strong,nullable) LTWKWebViewUIDelegate *wKUIDelegate;//WK的UI 代理
-@property (nonatomic,strong,nullable) LTWKNavigationDelegate *wKNavigationDelegate;//WK的UI 代理
+@property (nonatomic,strong ,readonly ) id webView;
+@property (nonatomic,strong ,readonly ,nullable) LTUIWebViewDelegate *webViewDelegate;
+@property (nonatomic,strong ,readonly ,nullable) LTWKWebViewUIDelegate *wkUIDelegate;//WK的UI 代理
+@property (nonatomic,strong ,readonly ,nullable) LTWKNavigationDelegate *wkNavigationDelegate;//WK的UI 代理
 
 @property (nonatomic,strong,nullable) NSString *customUserAgent; //自定义
 @property (nonatomic,assign) BOOL isWKWebView;//webView是否为WKWebView
@@ -41,7 +53,7 @@ NS_SWIFT_NAME(LTWebView)
 - (instancetype)initWithFrame:(CGRect)frame webViewType: (LTWebViewType) type;
 - (nullable id)loadRequest:(NSURLRequest *)request;
 - (nullable id)loadHTMLString:(NSString *)string baseURL:(nullable NSURL *)baseURL;
-- (nullable id)loadData:(NSData *)data MIMEType:(nullable NSString *)MIMEType textEncodingName:(nullable NSString *)textEncodingName baseURL:(nullable NSURL *)baseURL;
+- (nullable id)loadData:(NSData *)data MIMEType:(nullable NSString *)MIMEType textEncodingName:(nullable NSString *)textEncodingName baseURL:(nullable NSURL *)baseURL ;
 @property (nullable, nonatomic, readonly, copy)   NSString *title;
 @property (nullable, nonatomic, readonly, strong) NSURLRequest *originRequest;
 @property (nullable, nonatomic, readonly, strong) NSURL *URL;
@@ -67,6 +79,19 @@ NS_SWIFT_NAME(LTWebView)
 // @param completion completion block.
 + (void)clearWebCacheCompletion:(dispatch_block_t)completion;
 
+
++ (nullable NSArray<NSHTTPCookie *>*)getCurrentWebCookiesWithBaseURL:(NSURL*)baseURL;
+
+// 这几段方法是可以手动获取cookies并保存,例如登录之后存储,下次启动APP继续是登录状态
+// 获取当前系统中已有的Cookies;
++ (nullable NSArray<NSHTTPCookie *>*)getCurrentWebAllCookies;
+// 从缓存同步到系统;
++ (void)syncWebCookiesFromStorage;
+// 从系统存储到缓存;
++ (void)syncWebCookiesToStorage;
+// 清理Cookies;
++ (void)cleanWebCookiesOfStorage;
+// 这几段方法是可以手动获取cookies并保存,例如登录之后存储,下次启动APP继续是登录状态
 
 //UIWebView 与WKWebview 设置cookie的方法不同
 //@para array中存放的是需要设置的cookie值,类型为NSString类型  。domain表示设置cookie的域，UIWebView需要使用此值

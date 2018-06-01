@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "LTWebView.h"
 NS_ASSUME_NONNULL_BEGIN
 

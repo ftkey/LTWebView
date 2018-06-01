@@ -56,13 +56,21 @@
 
 - (void)addCookieOutScriptWithController:(WKUserContentController*)userContentController
 {
-    WKUserScript *cookieOutScript = [[WKUserScript alloc] initWithSource:[NSString stringWithFormat:@"%@%@%@",@"window.webkit.messageHandlers.",kLTWKWebViewCookiesHandlerName,@".postMessage(document.cookie);"]
-                                                           injectionTime:WKUserScriptInjectionTimeAtDocumentStart
-                                                        forMainFrameOnly:NO];
-    [userContentController addUserScript:cookieOutScript];
-    
-    [userContentController addScriptMessageHandler:self
-                                              name:kLTWKWebViewCookiesHandlerName];
+    NSString *sourceString = [NSString stringWithFormat:@"%@%@%@",@"window.webkit.messageHandlers.",kLTWKWebViewCookiesHandlerName,@".postMessage(document.cookie);"];
+    __block BOOL isNeedAdd = YES;
+    [userContentController.userScripts enumerateObjectsUsingBlock:^(WKUserScript * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.source isEqualToString:sourceString]) {
+            isNeedAdd = NO;
+        }
+        *stop = YES;
+    }];
+    if (isNeedAdd) {
+        WKUserScript *cookieOutScript = [[WKUserScript alloc] initWithSource:sourceString
+                                                               injectionTime:WKUserScriptInjectionTimeAtDocumentStart
+                                                            forMainFrameOnly:NO];
+        [userContentController addUserScript:cookieOutScript];
+        [userContentController addScriptMessageHandler:self name:kLTWKWebViewCookiesHandlerName];
+    }
 }
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     if(self.webView) {
@@ -111,7 +119,7 @@
     }
     
     NSString *header = [array componentsJoinedByString:@";"];
-    NSLog(header);
+    NSLog(@"HEADER: %@",header);
     [request setValue:header forHTTPHeaderField:@"Set-Cookie"];
 
     return [request copy];

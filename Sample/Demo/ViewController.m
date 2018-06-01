@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "ViewController2.h"
+
 #import "LTWebViewController.h"
 @interface ViewController ()
 
@@ -28,6 +30,10 @@
     NSURL * url = [NSURL URLWithString:@"http://github.com"];
     LTWebViewController *webVC = [[LTWebViewController alloc] initWithURL:url type:LTWebViewTypeWKWebView title:@"常用电话"];
     
+    [self.navigationController pushViewController:webVC animated:YES];
+}
+-(IBAction)onPushJS:(id)sender {
+    ViewController2 *webVC = [[ViewController2 alloc] init];
     [self.navigationController pushViewController:webVC animated:YES];
 }
 @end

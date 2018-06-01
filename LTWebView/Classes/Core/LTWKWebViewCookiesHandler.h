@@ -6,6 +6,7 @@
 //
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
 NS_ASSUME_NONNULL_BEGIN
@@ -22,6 +23,8 @@ static NSString *kLTWKWebViewCookiesHandlerName = @"lt_updateCookies";
 - (void)addCookieInScriptWithController:(WKUserContentController*)userContentController;
 - (void)addCookieOutScriptWithController:(WKUserContentController*)userContentController;
 + (NSURLRequest*)preCookiesRequest:(NSURLRequest*)originalRequest;
+
+
 
 @end
 
