@@ -11,6 +11,7 @@
 #endif
 
 #import "LTUIWebViewDelegate.h"
+#import "LTWebCookiesManager.h"
 #import "LTWebView.h"
 #import "LTWebViewController.h"
 #import "LTWKNavigationDelegate.h"
@@ -18,6 +19,7 @@
 #import "LTWKWebViewCookiesHandler.h"
 #import "LTWKWebViewUIDelegate.h"
 #import "LTJSBridgeCallback.h"
+#import "LTJSBridgeInterface.h"
 #import "LTJSBridgeProxy.h"
 #import "LTJSBridgeWebView.h"
 

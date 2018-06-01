@@ -1,8 +1,8 @@
 PODS:
-  - LTWebView (2.0):
-    - LTWebView/Core (= 2.0)
-  - LTWebView/Core (2.0)
-  - LTWebView/JSBridge (2.0):
+  - LTWebView (2.0.1):
+    - LTWebView/Core (= 2.0.1)
+  - LTWebView/Core (2.0.1)
+  - LTWebView/JSBridge (2.0.1):
     - LTWebView/Core
 
 DEPENDENCIES:
@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
     :path: "../LTWebView.podspec"
 
 SPEC CHECKSUMS:
-  LTWebView: 799add5dd52aab9e02e84ae5c948ef672e0943bc
+  LTWebView: c762cd16be26a3dc951eb60817c195bb0ea65415
 
 PODFILE CHECKSUM: 7e06219a291e85d9d3d8fb2489ba48604aac2a4f
 

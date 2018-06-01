@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <LTWebView/LTWebCookiesManager.h>
 
 @interface AppDelegate ()
 
@@ -16,6 +17,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [[LTWebCookiesManager defaultManager] setAllowAutoSyncWebCookies:YES];
     // Override point for customization after application launch.
     return YES;
 }

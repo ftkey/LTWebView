@@ -22,14 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 #define LT_WEBVIEW_USE_WK_IOS8_CUSTOM_USERAGENT 1
 #endif
 
-// WK默认不支持POST方式的Cookies共享
+// WK默认不支持POST方式的Cookies共享 (使用LTWebCookiesManager来管理Cookies更方便)
 #ifndef LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES
-#define LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES 1
-#endif
-
-
-#ifndef LT_WEBVIEW_COOKIES_STRAGE_KEY_NAME
-#define LT_WEBVIEW_COOKIES_STRAGE_KEY_NAME @"lt.webview.cookies.strage.key"
+#define LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES 0
 #endif
 
 
@@ -80,22 +75,9 @@ NS_SWIFT_NAME(LTWebView)
 + (void)clearWebCacheCompletion:(dispatch_block_t)completion;
 
 
-+ (nullable NSArray<NSHTTPCookie *>*)getCurrentWebCookiesWithBaseURL:(NSURL*)baseURL;
-
-// 这几段方法是可以手动获取cookies并保存,例如登录之后存储,下次启动APP继续是登录状态
-// 获取当前系统中已有的Cookies;
-+ (nullable NSArray<NSHTTPCookie *>*)getCurrentWebAllCookies;
-// 从缓存同步到系统;
-+ (void)syncWebCookiesFromStorage;
-// 从系统存储到缓存;
-+ (void)syncWebCookiesToStorage;
-// 清理Cookies;
-+ (void)cleanWebCookiesOfStorage;
-// 这几段方法是可以手动获取cookies并保存,例如登录之后存储,下次启动APP继续是登录状态
-
 //UIWebView 与WKWebview 设置cookie的方法不同
 //@para array中存放的是需要设置的cookie值,类型为NSString类型  。domain表示设置cookie的域，UIWebView需要使用此值
-- (void)setCookieWithCooksArray:(NSArray<NSString*> *)array domain: (NSString *) domain forRequest: (NSMutableURLRequest *) request;
+- (void)setCookieWithCooksArray:(NSArray<NSString*> *)array domain: (NSString *) domain forRequest: (NSMutableURLRequest *)request;
 
 //以下针对UIWebView ，如果使用的是WKWebview，相应设置无效
 //是否根据视图大小来缩放页面  默认为YES
