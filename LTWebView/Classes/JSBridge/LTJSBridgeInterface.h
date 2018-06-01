@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_NAME(JSBridgeInterface)
 @protocol LTJSBridgeInterface <NSObject>
-- (NSString*)interfaceName;
+- (NSString* _Nonnull)interfaceName;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -5,6 +5,8 @@
 //  Created by Futao on 2018/5/31.
 //
 #import <objc/runtime.h>
+#import <Foundation/Foundation.h>
+
 #import <WebKit/WebKit.h>
 
 #import "LTJSBridgeProxy.h"
@@ -39,7 +41,8 @@
 
 - (void)addJavascriptInterface:(id<LTJSBridgeInterface>)interface {
     if (interface) {
-        [self.javascriptInterfaces setObject:interface forKey:[interface interfaceName]];
+        NSString *interfaceName = [interface interfaceName] ;
+        self.javascriptInterfaces[interfaceName] = interface;
     }
 }
 
@@ -67,7 +70,6 @@
     }
 }
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
-    [self injectJSScript:webView];
     if ([self.forwardDelegate respondsToSelector:@selector(webView:didStartProvisionalNavigation:)]) {
         return [self.forwardDelegate webView:webView didStartProvisionalNavigation:navigation];
     }
@@ -83,6 +85,7 @@
     }
 }
 - (void)webView:(WKWebView *)webView didCommitNavigation:(null_unspecified WKNavigation *)navigation {
+    [self injectJSScript:webView];
     if ([self.forwardDelegate respondsToSelector:@selector(webView:didCommitNavigation:)]) {
         return [self.forwardDelegate webView:webView didCommitNavigation:navigation];
     }
@@ -139,7 +142,7 @@
     NSString* method = [(NSString*)[components objectAtIndex:2]
                         stringByRemovingPercentEncoding];
     
-    NSObject* interface = [self.javascriptInterfaces objectForKey:obj];
+    NSObject* interface = self.javascriptInterfaces[obj];
     
     // execute the interfacing method
     SEL selector = NSSelectorFromString(method);
@@ -193,7 +196,7 @@
     
     //inject the javascript interface
     for(id key in self.javascriptInterfaces) {
-        NSObject* interface = [self.javascriptInterfaces objectForKey:key];
+        NSObject* interface = self.javascriptInterfaces[key];
         
         [injection appendString:@"JSB.inject(\""];
         [injection appendString:key];
