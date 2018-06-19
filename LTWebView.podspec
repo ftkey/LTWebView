@@ -17,10 +17,5 @@ Pod::Spec.new do |s|
   s.subspec "Core" do |ss|
     ss.source_files  = "Classes", "LTWebView/Classes/Core/**/*.{h,m}"
   end
-  s.subspec 'JSBridge' do |ss|
-    ss.dependency 'LTWebView/Core'
-    ss.source_files  = "Classes", "LTWebView/Classes/JSBridge/**/*.{h,m}"
-  end
-
 
 end
