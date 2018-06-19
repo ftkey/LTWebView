@@ -1,7 +1,7 @@
 PODS:
-  - LTWebView (2.0.2):
-    - LTWebView/Core (= 2.0.2)
-  - LTWebView/Core (2.0.2)
+  - LTWebView (2.0.3):
+    - LTWebView/Core (= 2.0.3)
+  - LTWebView/Core (2.0.3)
 
 DEPENDENCIES:
   - LTWebView (from `../LTWebView.podspec`)
@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: "../LTWebView.podspec"
 
 SPEC CHECKSUMS:
-  LTWebView: f13217e4b96abe937159eea10b720951b682e9f2
+  LTWebView: a14c87cf63a0f0b22b0e7899a4c56bf4ef9bf266
 
 PODFILE CHECKSUM: 88bcf134eb492bc7a74e4c707d85d37337b65efb
 

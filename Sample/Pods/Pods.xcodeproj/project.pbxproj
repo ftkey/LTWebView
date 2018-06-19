@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		004CB3B1D5DAE2AE62FC4578812DD9EB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39BBFD317A099590EE8F3F8B71C08AE7 /* UIKit.framework */; };
-		007982932200CF23DEA8405D78FC69AF /* LTWebView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B823BD05C607D937FB215EF1A974C0B /* LTWebView-dummy.m */; };
-		11F3764AE250DAD5D61F006650A6FE09 /* LTWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C556489D9C16470EFCDBAC3D7E8DD9BD /* LTWebViewController.bundle */; };
-		1E46C82F53F42F8FEAA51EAEFC7874AA /* LTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CFD4DB7229E114656BF6156A6BAE813 /* LTWebViewController.m */; };
-		24BB8543EC5BC8DE0DF16A478F0FDF69 /* LTWKWebViewUIDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 36FE3B25CFF298803A9639673BFC20C5 /* LTWKWebViewUIDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4EB2667162259C7ECCE8981E4AF4FFF4 /* LTUIWebViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 81BA4589B7C613E5832A6A2C6222959E /* LTUIWebViewDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4F50BCD6BFA1458468A99C9EE262948A /* LTWKNavigationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B862859D178A97B5E7A220711E43EF /* LTWKNavigationDelegate.m */; };
-		51B71CE0881B8896B1BC4CB68C1CA0FB /* LTWKWebViewUIDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E72A34633038CC2C25E188B63A5539 /* LTWKWebViewUIDelegate.m */; };
-		663C12B636EF1A42F7C502702F99BF3B /* LTWKNavigationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 930D028744AAE2373C3F7F34ED16E5C9 /* LTWKNavigationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6DB95CF9B4AC223F5CB98437E468CF1F /* LTWebView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 05BBE44E101C0836572EFEEC8FBE2401 /* LTWebView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0EE3B4A02138BACE6F0ABAB78929A024 /* LTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CAAEE8F0B8CA689733E43E55A3A8CCC /* LTWebViewController.m */; };
+		12DD4E3D04DDDCAFB2FEDA820E2E6E05 /* LTWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2938DB1442097059DAACC55547A311 /* LTWebView.m */; };
+		1C480C4CDBDDCD2A5FDAA5309E80ACD8 /* LTWKNavigationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = AB3FCD179C46AAE3AB0292E133A4C68F /* LTWKNavigationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		23B9648CA22E0AC4EBF7807583BBFD6E /* LTWKNavigationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B62A25C3AF349386ACD2981741F1779 /* LTWKNavigationDelegate.m */; };
+		25D28E4783B3D021EE7279EFD15EE494 /* LTWebView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 418E7E09F164D9BC0B91DA66AEE4ACA2 /* LTWebView-dummy.m */; };
+		5EF24C5518CF7BA5021BC6E1411160F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B98C6F152FF0922D5549B11DAB7894 /* Foundation.framework */; };
+		6986553E402EEC86EA592E32691E8EF8 /* LTWKWebViewConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C1FBC291ABE5F5B29CF44FCE492CC5EF /* LTWKWebViewConfiguration.m */; };
 		703B93BEEF7F4B47FEE90E74D5D8C0AD /* Pods-Demo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1297CC1D72EFE436360CFBB898F8CB2E /* Pods-Demo-dummy.m */; };
+		8524C8A0FA05AEDDEBA6B8092FBA7A4E /* LTWKWebViewUIDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8E1C0E2A746253741119C6DB4F99C7 /* LTWKWebViewUIDelegate.m */; };
 		88DA5F1688B4FF4FE9E6D6742FF950C9 /* Pods-Demo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 27BC0EBDAE14E89E57D584378BDA3116 /* Pods-Demo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9B79ACC73C6E2E918EC38F521CD5C1EC /* LTWebCookiesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5438142F9B8CBDE866D015DF9581F627 /* LTWebCookiesManager.m */; };
-		9C6337CFC0EFA633E24749D5630CFACD /* LTWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AE5040C07260F7BDB5DD676FD792BA /* LTWebView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AEB8A4C7E7AECCC0060939212AF68724 /* LTWKWebViewConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = AA18FA6DB8D47157516C16B0A7CB9C65 /* LTWKWebViewConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AFAC53B8344C0DDAD3200C37E5769B21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B98C6F152FF0922D5549B11DAB7894 /* Foundation.framework */; };
-		BEC08293AF0B559478AB39385662843E /* LTWebCookiesManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F2914AECA31ED5E6770DF634CA2EDB50 /* LTWebCookiesManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E048C4B6973F2BE4A883305217857D03 /* LTWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = BB161F472CA509672AB56FDE37732240 /* LTWebViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E443C06AB760E5CC7E5BBFA5C39A7F82 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03074534500D08B10E6A7E1630099AC2 /* WebKit.framework */; };
-		E96C2BE7261486A2B557F9A65C5E5083 /* LTWKWebViewConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 139EFB86638933DA1B7054329D3F4EE2 /* LTWKWebViewConfiguration.m */; };
-		F1F2DA676B52AB97CF9BBA67DD3BB5C4 /* LTWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92F612FEF3000D34637F9DF543BFF006 /* LTWebView.m */; };
-		F607B7087E666F5998869FC645162DC7 /* LTUIWebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BBFCB0B4C8DDBD24C32B12D3C508FE5 /* LTUIWebViewDelegate.m */; };
+		8E7D36C1F083DCB7D0FC9A6B8EE197B9 /* LTWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 89DF3F8E30493F3C489D8937593A5FB8 /* LTWebViewController.bundle */; };
+		ACFA2AA1FBCD987696A0AB52DEF51F08 /* LTWKWebViewUIDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 776B4FB4E0F74900FF1465DC8C4DB5C3 /* LTWKWebViewUIDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B38521548DE5E5FA6D8EA53A8091470D /* LTWKWebViewConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 023CE0B0F8C5378E465EE8D4D8FEF91D /* LTWKWebViewConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C302240755A2D11E7FC95CB8B719577E /* LTWebCookiesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 147B9979D81833DE96685207AD8FD7B1 /* LTWebCookiesManager.m */; };
+		DAB45D20A62BB5A2878B41155493A9B7 /* LTUIWebViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C262977F76485316FC635340FE3D7D4 /* LTUIWebViewDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DB64902EF731B3ADCF861036E8EE85FC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39BBFD317A099590EE8F3F8B71C08AE7 /* UIKit.framework */; };
+		DFAE55C3372CD038E4BA0E3CD0933818 /* LTWebCookiesManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 092C1807BB70465AC2A086A2D65137BA /* LTWebCookiesManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E1717CF9E5211CA85D023679E830F279 /* LTWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 41F983B9B43FD77D8240DA41C4DCD757 /* LTWebViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E768B7716890579F249D21FDFCE0F103 /* LTWebView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DD634732B454826C56EB4DFF10D23F9 /* LTWebView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAEE47CBE1BB31EB782B738A39DCD237 /* LTUIWebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2119B33FB3E75C85A3D793857C5BA9 /* LTUIWebViewDelegate.m */; };
+		EC4EE72E996B026BA3D0490DE0AA3BBA /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03074534500D08B10E6A7E1630099AC2 /* WebKit.framework */; };
 		F6F13A302D4C862CB7DBDEDAE6305581 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B98C6F152FF0922D5549B11DAB7894 /* Foundation.framework */; };
+		F9D8B6A06AFDE2255160563D478D67C4 /* LTWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E7B45AFA67AD18DD9C980F71B6B2E5 /* LTWebView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,70 +37,70 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E90FE1228BB7B3518F82A659B9EEDBFC;
+			remoteGlobalIDString = 3DB7132E23F3534F969E882B069687DF;
 			remoteInfo = LTWebView;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		023CE0B0F8C5378E465EE8D4D8FEF91D /* LTWKWebViewConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTWKWebViewConfiguration.h; path = LTWebView/Classes/Core/LTWKWebViewConfiguration.h; sourceTree = "<group>"; };
 		03074534500D08B10E6A7E1630099AC2 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/WebKit.framework; sourceTree = DEVELOPER_DIR; };
-		05BBE44E101C0836572EFEEC8FBE2401 /* LTWebView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LTWebView-umbrella.h"; sourceTree = "<group>"; };
-		070A222045FD027B22E2B9CE10762315 /* LTWebView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LTWebView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		084D1F5227C885AE9D5DE15CD36F2061 /* LTWebView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = LTWebView.xcconfig; sourceTree = "<group>"; };
+		044E27F2406F02C44D0862A7CB43127D /* LTWebView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LTWebView-prefix.pch"; sourceTree = "<group>"; };
+		070A222045FD027B22E2B9CE10762315 /* LTWebView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = LTWebView.framework; path = LTWebView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		092C1807BB70465AC2A086A2D65137BA /* LTWebCookiesManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTWebCookiesManager.h; path = LTWebView/Classes/Core/LTWebCookiesManager.h; sourceTree = "<group>"; };
 		1297CC1D72EFE436360CFBB898F8CB2E /* Pods-Demo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Demo-dummy.m"; sourceTree = "<group>"; };
-		139EFB86638933DA1B7054329D3F4EE2 /* LTWKWebViewConfiguration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTWKWebViewConfiguration.m; path = LTWebView/Classes/Core/LTWKWebViewConfiguration.m; sourceTree = "<group>"; };
+		147B9979D81833DE96685207AD8FD7B1 /* LTWebCookiesManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTWebCookiesManager.m; path = LTWebView/Classes/Core/LTWebCookiesManager.m; sourceTree = "<group>"; };
 		1965FF76BB91163730C384D7B1E2C4FB /* Pods-Demo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Demo-frameworks.sh"; sourceTree = "<group>"; };
-		1BBFCB0B4C8DDBD24C32B12D3C508FE5 /* LTUIWebViewDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTUIWebViewDelegate.m; path = LTWebView/Classes/Core/LTUIWebViewDelegate.m; sourceTree = "<group>"; };
+		1C262977F76485316FC635340FE3D7D4 /* LTUIWebViewDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTUIWebViewDelegate.h; path = LTWebView/Classes/Core/LTUIWebViewDelegate.h; sourceTree = "<group>"; };
+		20B4E99AA1C98F4CE4EF95A0296710E8 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		275C17A46F39C36327493626A168B6D5 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		27BC0EBDAE14E89E57D584378BDA3116 /* Pods-Demo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Demo-umbrella.h"; sourceTree = "<group>"; };
 		282ECFCD0084F94EC1DED9401AAFE7F5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		30C659EDECE09F696FE2B83EA0957BEC /* LTWebView.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = LTWebView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		36FE3B25CFF298803A9639673BFC20C5 /* LTWKWebViewUIDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTWKWebViewUIDelegate.h; path = LTWebView/Classes/Core/LTWKWebViewUIDelegate.h; sourceTree = "<group>"; };
 		39BBFD317A099590EE8F3F8B71C08AE7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		5438142F9B8CBDE866D015DF9581F627 /* LTWebCookiesManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTWebCookiesManager.m; path = LTWebView/Classes/Core/LTWebCookiesManager.m; sourceTree = "<group>"; };
+		3B62A25C3AF349386ACD2981741F1779 /* LTWKNavigationDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTWKNavigationDelegate.m; path = LTWebView/Classes/Core/LTWKNavigationDelegate.m; sourceTree = "<group>"; };
+		3D520BE657C5153AF14328FA10A4D56E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		3D8E1C0E2A746253741119C6DB4F99C7 /* LTWKWebViewUIDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTWKWebViewUIDelegate.m; path = LTWebView/Classes/Core/LTWKWebViewUIDelegate.m; sourceTree = "<group>"; };
+		3DD634732B454826C56EB4DFF10D23F9 /* LTWebView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LTWebView-umbrella.h"; sourceTree = "<group>"; };
+		418E7E09F164D9BC0B91DA66AEE4ACA2 /* LTWebView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "LTWebView-dummy.m"; sourceTree = "<group>"; };
+		41F983B9B43FD77D8240DA41C4DCD757 /* LTWebViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTWebViewController.h; path = LTWebView/Classes/Core/LTWebViewController.h; sourceTree = "<group>"; };
+		45B6A23A7A4F35DBD38EBD360FA1BFA1 /* LTWebView.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = LTWebView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		5CAAEE8F0B8CA689733E43E55A3A8CCC /* LTWebViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTWebViewController.m; path = LTWebView/Classes/Core/LTWebViewController.m; sourceTree = "<group>"; };
 		5EFCFC4782B9646B842EB839A267D7AA /* Pods-Demo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Demo-resources.sh"; sourceTree = "<group>"; };
-		60D8B7B17AEBB9BBFDAAAF5D5F19DBD8 /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		74AE5040C07260F7BDB5DD676FD792BA /* LTWebView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTWebView.h; path = LTWebView/Classes/Core/LTWebView.h; sourceTree = "<group>"; };
+		60D8B7B17AEBB9BBFDAAAF5D5F19DBD8 /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Demo.framework; path = "Pods-Demo.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		62E7B45AFA67AD18DD9C980F71B6B2E5 /* LTWebView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTWebView.h; path = LTWebView/Classes/Core/LTWebView.h; sourceTree = "<group>"; };
+		776B4FB4E0F74900FF1465DC8C4DB5C3 /* LTWKWebViewUIDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTWKWebViewUIDelegate.h; path = LTWebView/Classes/Core/LTWKWebViewUIDelegate.h; sourceTree = "<group>"; };
 		7A01701031823CCAC30B58767A21D8A4 /* Pods-Demo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Demo.modulemap"; sourceTree = "<group>"; };
-		81BA4589B7C613E5832A6A2C6222959E /* LTUIWebViewDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTUIWebViewDelegate.h; path = LTWebView/Classes/Core/LTUIWebViewDelegate.h; sourceTree = "<group>"; };
-		87AF7275F2B379E59D688E0496851BFB /* LTWebView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = LTWebView.modulemap; sourceTree = "<group>"; };
-		8CFD4DB7229E114656BF6156A6BAE813 /* LTWebViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTWebViewController.m; path = LTWebView/Classes/Core/LTWebViewController.m; sourceTree = "<group>"; };
+		89DF3F8E30493F3C489D8937593A5FB8 /* LTWebViewController.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = LTWebViewController.bundle; path = LTWebView/Resources/LTWebViewController.bundle; sourceTree = "<group>"; };
+		8A2938DB1442097059DAACC55547A311 /* LTWebView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTWebView.m; path = LTWebView/Classes/Core/LTWebView.m; sourceTree = "<group>"; };
+		8C8DB0B31CE2BDE38A9ED40A2482AF67 /* LTWebView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = LTWebView.modulemap; sourceTree = "<group>"; };
 		9154BF16DC759A1EDD6A1AB4E22AA07D /* Pods-Demo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Demo-acknowledgements.markdown"; sourceTree = "<group>"; };
-		92F612FEF3000D34637F9DF543BFF006 /* LTWebView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTWebView.m; path = LTWebView/Classes/Core/LTWebView.m; sourceTree = "<group>"; };
-		930D028744AAE2373C3F7F34ED16E5C9 /* LTWKNavigationDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTWKNavigationDelegate.h; path = LTWebView/Classes/Core/LTWKNavigationDelegate.h; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		98FAE9D586697C4268CA25CC347C838D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		9B823BD05C607D937FB215EF1A974C0B /* LTWebView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "LTWebView-dummy.m"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A293EC6905CD2F770F31A1A57ACA0633 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
-		A4B444B7E781161E603CE4C58E86FC47 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		AA18FA6DB8D47157516C16B0A7CB9C65 /* LTWKWebViewConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTWKWebViewConfiguration.h; path = LTWebView/Classes/Core/LTWKWebViewConfiguration.h; sourceTree = "<group>"; };
-		BB161F472CA509672AB56FDE37732240 /* LTWebViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTWebViewController.h; path = LTWebView/Classes/Core/LTWebViewController.h; sourceTree = "<group>"; };
-		C556489D9C16470EFCDBAC3D7E8DD9BD /* LTWebViewController.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = LTWebViewController.bundle; path = LTWebView/Resources/LTWebViewController.bundle; sourceTree = "<group>"; };
-		C6E72A34633038CC2C25E188B63A5539 /* LTWKWebViewUIDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTWKWebViewUIDelegate.m; path = LTWebView/Classes/Core/LTWKWebViewUIDelegate.m; sourceTree = "<group>"; };
+		AB3FCD179C46AAE3AB0292E133A4C68F /* LTWKNavigationDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTWKNavigationDelegate.h; path = LTWebView/Classes/Core/LTWKNavigationDelegate.h; sourceTree = "<group>"; };
+		B1177A9B45BAC3D9827A564BFDEF73B1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		C1FBC291ABE5F5B29CF44FCE492CC5EF /* LTWKWebViewConfiguration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTWKWebViewConfiguration.m; path = LTWebView/Classes/Core/LTWKWebViewConfiguration.m; sourceTree = "<group>"; };
 		D0B98C6F152FF0922D5549B11DAB7894 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		E3F4DD185D5ED3F0F23A9CDEA48236CC /* LTWebView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LTWebView-prefix.pch"; sourceTree = "<group>"; };
+		D48C535E422D605C42BDE2AC04A8EEE2 /* LTWebView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = LTWebView.xcconfig; sourceTree = "<group>"; };
 		EB2BD00EE3F4FBA187EE15A5C9968F90 /* Pods-Demo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Demo-acknowledgements.plist"; sourceTree = "<group>"; };
-		F2914AECA31ED5E6770DF634CA2EDB50 /* LTWebCookiesManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LTWebCookiesManager.h; path = LTWebView/Classes/Core/LTWebCookiesManager.h; sourceTree = "<group>"; };
-		F6E319A44B86882718AE8EC83BE18C9F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F8B862859D178A97B5E7A220711E43EF /* LTWKNavigationDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTWKNavigationDelegate.m; path = LTWebView/Classes/Core/LTWKNavigationDelegate.m; sourceTree = "<group>"; };
+		ED2119B33FB3E75C85A3D793857C5BA9 /* LTUIWebViewDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LTUIWebViewDelegate.m; path = LTWebView/Classes/Core/LTUIWebViewDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AC807996E6C52D1D69158DCC8B44262C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EF24C5518CF7BA5021BC6E1411160F9 /* Foundation.framework in Frameworks */,
+				DB64902EF731B3ADCF861036E8EE85FC /* UIKit.framework in Frameworks */,
+				EC4EE72E996B026BA3D0490DE0AA3BBA /* WebKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C4052FD3638C8355373E4E5FA80366F9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F6F13A302D4C862CB7DBDEDAE6305581 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DAFA6227ED0315851C905B89F9806E84 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AFAC53B8344C0DDAD3200C37E5769B21 /* Foundation.framework in Frameworks */,
-				004CB3B1D5DAE2AE62FC4578812DD9EB /* UIKit.framework in Frameworks */,
-				E443C06AB760E5CC7E5BBFA5C39A7F82 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,63 +125,33 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1EEFC18FF792DD3E4B233241BDCAEE57 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				C556489D9C16470EFCDBAC3D7E8DD9BD /* LTWebViewController.bundle */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		48E3C91E7EAC98E243CA53FF3BC24FEE /* LTWebView */ = {
-			isa = PBXGroup;
-			children = (
-				4F32B281BA7EA7EFC9B9C82CE944F363 /* Core */,
-				58CDA65E84AF887A0F5A2E60787BD35C /* Pod */,
-				1EEFC18FF792DD3E4B233241BDCAEE57 /* Resources */,
-				C63E0214A053D8E0AEDF5C841BD7CD02 /* Support Files */,
-			);
-			name = LTWebView;
-			path = ../..;
-			sourceTree = "<group>";
-		};
-		4F32B281BA7EA7EFC9B9C82CE944F363 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				81BA4589B7C613E5832A6A2C6222959E /* LTUIWebViewDelegate.h */,
-				1BBFCB0B4C8DDBD24C32B12D3C508FE5 /* LTUIWebViewDelegate.m */,
-				F2914AECA31ED5E6770DF634CA2EDB50 /* LTWebCookiesManager.h */,
-				5438142F9B8CBDE866D015DF9581F627 /* LTWebCookiesManager.m */,
-				74AE5040C07260F7BDB5DD676FD792BA /* LTWebView.h */,
-				92F612FEF3000D34637F9DF543BFF006 /* LTWebView.m */,
-				BB161F472CA509672AB56FDE37732240 /* LTWebViewController.h */,
-				8CFD4DB7229E114656BF6156A6BAE813 /* LTWebViewController.m */,
-				930D028744AAE2373C3F7F34ED16E5C9 /* LTWKNavigationDelegate.h */,
-				F8B862859D178A97B5E7A220711E43EF /* LTWKNavigationDelegate.m */,
-				AA18FA6DB8D47157516C16B0A7CB9C65 /* LTWKWebViewConfiguration.h */,
-				139EFB86638933DA1B7054329D3F4EE2 /* LTWKWebViewConfiguration.m */,
-				36FE3B25CFF298803A9639673BFC20C5 /* LTWKWebViewUIDelegate.h */,
-				C6E72A34633038CC2C25E188B63A5539 /* LTWKWebViewUIDelegate.m */,
-			);
-			name = Core;
-			sourceTree = "<group>";
-		};
 		52716454770C499FF582733D549E4979 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				48E3C91E7EAC98E243CA53FF3BC24FEE /* LTWebView */,
+				9BEBE90E1B546E7E2F7BF3F7E7D1E2A8 /* LTWebView */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
 		};
-		58CDA65E84AF887A0F5A2E60787BD35C /* Pod */ = {
+		5849C909D46CEDF852F1D1101860730F /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				A4B444B7E781161E603CE4C58E86FC47 /* LICENSE */,
-				30C659EDECE09F696FE2B83EA0957BEC /* LTWebView.podspec */,
-				98FAE9D586697C4268CA25CC347C838D /* README.md */,
+				1C262977F76485316FC635340FE3D7D4 /* LTUIWebViewDelegate.h */,
+				ED2119B33FB3E75C85A3D793857C5BA9 /* LTUIWebViewDelegate.m */,
+				092C1807BB70465AC2A086A2D65137BA /* LTWebCookiesManager.h */,
+				147B9979D81833DE96685207AD8FD7B1 /* LTWebCookiesManager.m */,
+				62E7B45AFA67AD18DD9C980F71B6B2E5 /* LTWebView.h */,
+				8A2938DB1442097059DAACC55547A311 /* LTWebView.m */,
+				41F983B9B43FD77D8240DA41C4DCD757 /* LTWebViewController.h */,
+				5CAAEE8F0B8CA689733E43E55A3A8CCC /* LTWebViewController.m */,
+				AB3FCD179C46AAE3AB0292E133A4C68F /* LTWKNavigationDelegate.h */,
+				3B62A25C3AF349386ACD2981741F1779 /* LTWKNavigationDelegate.m */,
+				023CE0B0F8C5378E465EE8D4D8FEF91D /* LTWKWebViewConfiguration.h */,
+				C1FBC291ABE5F5B29CF44FCE492CC5EF /* LTWKWebViewConfiguration.m */,
+				776B4FB4E0F74900FF1465DC8C4DB5C3 /* LTWKWebViewUIDelegate.h */,
+				3D8E1C0E2A746253741119C6DB4F99C7 /* LTWKWebViewUIDelegate.m */,
 			);
-			name = Pod;
+			name = Core;
 			sourceTree = "<group>";
 		};
 		6F2351C272926D3E0225FEFC2F9C5D1F /* Targets Support Files */ = {
@@ -203,18 +173,48 @@
 			);
 			sourceTree = "<group>";
 		};
-		C63E0214A053D8E0AEDF5C841BD7CD02 /* Support Files */ = {
+		9BEBE90E1B546E7E2F7BF3F7E7D1E2A8 /* LTWebView */ = {
 			isa = PBXGroup;
 			children = (
-				F6E319A44B86882718AE8EC83BE18C9F /* Info.plist */,
-				87AF7275F2B379E59D688E0496851BFB /* LTWebView.modulemap */,
-				084D1F5227C885AE9D5DE15CD36F2061 /* LTWebView.xcconfig */,
-				9B823BD05C607D937FB215EF1A974C0B /* LTWebView-dummy.m */,
-				E3F4DD185D5ED3F0F23A9CDEA48236CC /* LTWebView-prefix.pch */,
-				05BBE44E101C0836572EFEEC8FBE2401 /* LTWebView-umbrella.h */,
+				5849C909D46CEDF852F1D1101860730F /* Core */,
+				C59F378C3E5ACA79490B599F100D6A2E /* Pod */,
+				AA6F49AA17E00BE5600E8805503FD3B6 /* Resources */,
+				BDBCAE677C2C4F17D015FF481012BB2D /* Support Files */,
+			);
+			name = LTWebView;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		AA6F49AA17E00BE5600E8805503FD3B6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				89DF3F8E30493F3C489D8937593A5FB8 /* LTWebViewController.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		BDBCAE677C2C4F17D015FF481012BB2D /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				20B4E99AA1C98F4CE4EF95A0296710E8 /* Info.plist */,
+				8C8DB0B31CE2BDE38A9ED40A2482AF67 /* LTWebView.modulemap */,
+				D48C535E422D605C42BDE2AC04A8EEE2 /* LTWebView.xcconfig */,
+				418E7E09F164D9BC0B91DA66AEE4ACA2 /* LTWebView-dummy.m */,
+				044E27F2406F02C44D0862A7CB43127D /* LTWebView-prefix.pch */,
+				3DD634732B454826C56EB4DFF10D23F9 /* LTWebView-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "Sample/Pods/Target Support Files/LTWebView";
+			sourceTree = "<group>";
+		};
+		C59F378C3E5ACA79490B599F100D6A2E /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				3D520BE657C5153AF14328FA10A4D56E /* LICENSE */,
+				45B6A23A7A4F35DBD38EBD360FA1BFA1 /* LTWebView.podspec */,
+				B1177A9B45BAC3D9827A564BFDEF73B1 /* README.md */,
+			);
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		CF58A9AAA805FDF37F67723722F14D8F /* Pods-Demo */ = {
@@ -247,18 +247,18 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		A17FE5B63D84E31953B4A64312704EC4 /* Headers */ = {
+		5FB1269400FA35F94543CAC9A7DF31B3 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EB2667162259C7ECCE8981E4AF4FFF4 /* LTUIWebViewDelegate.h in Headers */,
-				BEC08293AF0B559478AB39385662843E /* LTWebCookiesManager.h in Headers */,
-				6DB95CF9B4AC223F5CB98437E468CF1F /* LTWebView-umbrella.h in Headers */,
-				9C6337CFC0EFA633E24749D5630CFACD /* LTWebView.h in Headers */,
-				E048C4B6973F2BE4A883305217857D03 /* LTWebViewController.h in Headers */,
-				663C12B636EF1A42F7C502702F99BF3B /* LTWKNavigationDelegate.h in Headers */,
-				AEB8A4C7E7AECCC0060939212AF68724 /* LTWKWebViewConfiguration.h in Headers */,
-				24BB8543EC5BC8DE0DF16A478F0FDF69 /* LTWKWebViewUIDelegate.h in Headers */,
+				DAB45D20A62BB5A2878B41155493A9B7 /* LTUIWebViewDelegate.h in Headers */,
+				DFAE55C3372CD038E4BA0E3CD0933818 /* LTWebCookiesManager.h in Headers */,
+				E768B7716890579F249D21FDFCE0F103 /* LTWebView-umbrella.h in Headers */,
+				F9D8B6A06AFDE2255160563D478D67C4 /* LTWebView.h in Headers */,
+				E1717CF9E5211CA85D023679E830F279 /* LTWebViewController.h in Headers */,
+				1C480C4CDBDDCD2A5FDAA5309E80ACD8 /* LTWKNavigationDelegate.h in Headers */,
+				B38521548DE5E5FA6D8EA53A8091470D /* LTWKWebViewConfiguration.h in Headers */,
+				ACFA2AA1FBCD987696A0AB52DEF51F08 /* LTWKWebViewUIDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +273,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		3DB7132E23F3534F969E882B069687DF /* LTWebView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8456D1CA29E470196A2BB83243C4256E /* Build configuration list for PBXNativeTarget "LTWebView" */;
+			buildPhases = (
+				D1EC6EDA3BA3E4F821226E3F368B96A2 /* Sources */,
+				AC807996E6C52D1D69158DCC8B44262C /* Frameworks */,
+				ABE65CE53C4426A3E4F6664956CCDAFC /* Resources */,
+				5FB1269400FA35F94543CAC9A7DF31B3 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LTWebView;
+			productName = LTWebView;
+			productReference = 070A222045FD027B22E2B9CE10762315 /* LTWebView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		DF3924BBE4A51B5C6845CADB0A3A7AE0 /* Pods-Demo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5BDF8B64F16DB8E3BCEE0B4DDD94B2E5 /* Build configuration list for PBXNativeTarget "Pods-Demo" */;
@@ -289,24 +307,6 @@
 			name = "Pods-Demo";
 			productName = "Pods-Demo";
 			productReference = 60D8B7B17AEBB9BBFDAAAF5D5F19DBD8 /* Pods_Demo.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		E90FE1228BB7B3518F82A659B9EEDBFC /* LTWebView */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 213A77F68632490911459D5BACB6FE7E /* Build configuration list for PBXNativeTarget "LTWebView" */;
-			buildPhases = (
-				28362877517D417D23BB0F05D998F6C5 /* Sources */,
-				DAFA6227ED0315851C905B89F9806E84 /* Frameworks */,
-				9360248738A7CDE171D4FABF886AE3CE /* Resources */,
-				A17FE5B63D84E31953B4A64312704EC4 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = LTWebView;
-			productName = LTWebView;
-			productReference = 070A222045FD027B22E2B9CE10762315 /* LTWebView.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -330,36 +330,36 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E90FE1228BB7B3518F82A659B9EEDBFC /* LTWebView */,
+				3DB7132E23F3534F969E882B069687DF /* LTWebView */,
 				DF3924BBE4A51B5C6845CADB0A3A7AE0 /* Pods-Demo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9360248738A7CDE171D4FABF886AE3CE /* Resources */ = {
+		ABE65CE53C4426A3E4F6664956CCDAFC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11F3764AE250DAD5D61F006650A6FE09 /* LTWebViewController.bundle in Resources */,
+				8E7D36C1F083DCB7D0FC9A6B8EE197B9 /* LTWebViewController.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		28362877517D417D23BB0F05D998F6C5 /* Sources */ = {
+		D1EC6EDA3BA3E4F821226E3F368B96A2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F607B7087E666F5998869FC645162DC7 /* LTUIWebViewDelegate.m in Sources */,
-				9B79ACC73C6E2E918EC38F521CD5C1EC /* LTWebCookiesManager.m in Sources */,
-				007982932200CF23DEA8405D78FC69AF /* LTWebView-dummy.m in Sources */,
-				F1F2DA676B52AB97CF9BBA67DD3BB5C4 /* LTWebView.m in Sources */,
-				1E46C82F53F42F8FEAA51EAEFC7874AA /* LTWebViewController.m in Sources */,
-				4F50BCD6BFA1458468A99C9EE262948A /* LTWKNavigationDelegate.m in Sources */,
-				E96C2BE7261486A2B557F9A65C5E5083 /* LTWKWebViewConfiguration.m in Sources */,
-				51B71CE0881B8896B1BC4CB68C1CA0FB /* LTWKWebViewUIDelegate.m in Sources */,
+				EAEE47CBE1BB31EB782B738A39DCD237 /* LTUIWebViewDelegate.m in Sources */,
+				C302240755A2D11E7FC95CB8B719577E /* LTWebCookiesManager.m in Sources */,
+				25D28E4783B3D021EE7279EFD15EE494 /* LTWebView-dummy.m in Sources */,
+				12DD4E3D04DDDCAFB2FEDA820E2E6E05 /* LTWebView.m in Sources */,
+				0EE3B4A02138BACE6F0ABAB78929A024 /* LTWebViewController.m in Sources */,
+				23B9648CA22E0AC4EBF7807583BBFD6E /* LTWKNavigationDelegate.m in Sources */,
+				6986553E402EEC86EA592E32691E8EF8 /* LTWKWebViewConfiguration.m in Sources */,
+				8524C8A0FA05AEDDEBA6B8092FBA7A4E /* LTWKWebViewUIDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,42 +377,12 @@
 		864675EEA4D14CE543D8126022A2F679 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = LTWebView;
-			target = E90FE1228BB7B3518F82A659B9EEDBFC /* LTWebView */;
+			target = 3DB7132E23F3534F969E882B069687DF /* LTWebView */;
 			targetProxy = B7A6D1F9AF0129BCBED81618F69E8198 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		05C480030FA188BE7FD552DB7EE0F85A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 084D1F5227C885AE9D5DE15CD36F2061 /* LTWebView.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/LTWebView/LTWebView-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/LTWebView/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/LTWebView/LTWebView.modulemap";
-				PRODUCT_MODULE_NAME = LTWebView;
-				PRODUCT_NAME = LTWebView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		1EE19F5DD95931924296F637BF18BD8F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -476,6 +446,37 @@
 			};
 			name = Debug;
 		};
+		9814CC3CE1D7DB15196F8938C670F6CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D48C535E422D605C42BDE2AC04A8EEE2 /* LTWebView.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/LTWebView/LTWebView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/LTWebView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/LTWebView/LTWebView.modulemap";
+				PRODUCT_MODULE_NAME = LTWebView;
+				PRODUCT_NAME = LTWebView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		B1508A3C0EAF92B93EEBAAAA44F94B69 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A293EC6905CD2F770F31A1A57ACA0633 /* Pods-Demo.debug.xcconfig */;
@@ -509,9 +510,9 @@
 			};
 			name = Debug;
 		};
-		C91B0CE4BD9406281E01E382F502682B /* Release */ = {
+		C2D64694867875E6385021DF1018F909 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 084D1F5227C885AE9D5DE15CD36F2061 /* LTWebView.xcconfig */;
+			baseConfigurationReference = D48C535E422D605C42BDE2AC04A8EEE2 /* LTWebView.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -534,11 +535,10 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 		D00312E128657862DC2F002A086D3571 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -635,15 +635,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		213A77F68632490911459D5BACB6FE7E /* Build configuration list for PBXNativeTarget "LTWebView" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				05C480030FA188BE7FD552DB7EE0F85A /* Debug */,
-				C91B0CE4BD9406281E01E382F502682B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -658,6 +649,15 @@
 			buildConfigurations = (
 				B1508A3C0EAF92B93EEBAAAA44F94B69 /* Debug */,
 				D00312E128657862DC2F002A086D3571 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8456D1CA29E470196A2BB83243C4256E /* Build configuration list for PBXNativeTarget "LTWebView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2D64694867875E6385021DF1018F909 /* Debug */,
+				9814CC3CE1D7DB15196F8938C670F6CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
