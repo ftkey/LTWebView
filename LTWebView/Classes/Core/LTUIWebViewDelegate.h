@@ -31,9 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(nullable NSError *)error;
 @end
 
-@interface LTUIWebViewDelegate : NSObject <UIWebViewDelegate>
+@interface LTUIWebViewDelegateImpl : NSObject <UIWebViewDelegate>
 
 @property (nonatomic, copy, nullable) NSString* title;
+@property (nonatomic, assign) CGFloat estimatedProgress;
 @property (nonatomic, weak, nullable) id <LTUIWebViewDelegate> forwardDelegate;
 - (instancetype)init;
 - (instancetype)initWithTitle:(NSString* __nullable)title ;

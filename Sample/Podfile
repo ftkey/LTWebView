@@ -5,6 +5,5 @@ use_frameworks!
 
 target 'Demo' do
     pod 'LTWebView' , :path => '../LTWebView.podspec'  #指定podspec文件
-    pod 'LTWebView/JSBridge' , :path => '../LTWebView.podspec'  #指定podspec文件
 
 end

@@ -19,7 +19,7 @@
 
 #import "LTWKWebViewUIDelegate.h"
 
-@implementation LTWKWebViewUIDelegate
+@implementation LTWKWebViewUIDelegateImpl
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -52,7 +52,7 @@
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction* ok = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK")
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", @"确定")
                                                  style:UIAlertActionStyleDefault
                                                handler:^(UIAlertAction* action)
                          {
@@ -73,7 +73,7 @@
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction* ok = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK")
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", @"确定")
                                                  style:UIAlertActionStyleDefault
                                                handler:^(UIAlertAction* action)
                          {
@@ -83,7 +83,7 @@
     
     [alert addAction:ok];
     
-    UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel")
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", @"取消")
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction* action)
                              {
@@ -104,7 +104,7 @@
                                                                    message:prompt
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction* ok = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK")
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", @"确定")
                                                  style:UIAlertActionStyleDefault
                                                handler:^(UIAlertAction* action)
                          {
@@ -114,7 +114,7 @@
     
     [alert addAction:ok];
     
-    UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel")
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", @"取消")
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction* action)
                              {

@@ -8,7 +8,7 @@
 
 #import "LTWKNavigationDelegate.h"
 
-@implementation LTWKNavigationDelegate
+@implementation LTWKNavigationDelegateImpl
 
 - (instancetype)init
 {
@@ -22,6 +22,23 @@
     if ([self.forwardDelegate respondsToSelector:@selector(webView:decidePolicyForNavigationAction:decisionHandler:)]) {
         return [self.forwardDelegate webView:webView decidePolicyForNavigationAction:navigationAction decisionHandler:decisionHandler];
     }else {
+        NSURLRequest* request = navigationAction.request;
+        NSURL* url = request.URL;
+        NSArray *acceptableSchemes = @[
+                                       @"tel",@"telprompt",
+                                       @"mailto",@"sms",
+                                       ];
+        if ([url.scheme isEqualToString:@"tel"]) {
+            NSString *urlString = [NSString stringWithFormat:@"telprompt://%@", url.relativeString];
+            url = [NSURL URLWithString:urlString];
+        }
+        if ([acceptableSchemes containsObject:url.scheme]) {
+            if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+                decisionHandler(WKNavigationActionPolicyCancel);
+                return;
+            }
+        }
         return decisionHandler(WKNavigationActionPolicyAllow);
     }
 }
@@ -79,11 +96,11 @@
         }
     }
 }
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    if ([self.forwardDelegate respondsToSelector:@selector(userContentController:didReceiveScriptMessage:)]) {
-        return [self.forwardDelegate userContentController:userContentController didReceiveScriptMessage:message];
-    }
-}
+//- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+//    if ([self.forwardDelegate respondsToSelector:@selector(userContentController:didReceiveScriptMessage:)]) {
+//        return [self.forwardDelegate userContentController:userContentController didReceiveScriptMessage:message];
+//    }
+//}
 
 
 @end

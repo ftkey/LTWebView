@@ -20,7 +20,7 @@
 
 #import "LTUIWebViewDelegate.h"
 
-@implementation LTUIWebViewDelegate
+@implementation LTUIWebViewDelegateImpl
 - (instancetype)init
 {
     self = [super init];
@@ -32,6 +32,7 @@
     self = [super init];
     if (self) {
         self.title = title;
+        self.estimatedProgress = 0;
     }
     return self;
 }
@@ -49,7 +50,6 @@
 
 - (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    
     BOOL shouldLoad = YES;
     if ([self.forwardDelegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
         shouldLoad =  [self.forwardDelegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType ];
@@ -59,6 +59,8 @@
 
 - (void)webViewDidStartLoad:(UIWebView*)webView
 {
+    self.estimatedProgress = 0.1;
+
     if ([self.forwardDelegate respondsToSelector:@selector(webViewDidStartLoad:)]) {
        return [self.forwardDelegate webViewDidStartLoad:webView];
     }
@@ -66,6 +68,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView*)webView
 {
+    self.estimatedProgress = 1.0;
     self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     if ([self.forwardDelegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
         return [self.forwardDelegate webViewDidFinishLoad:webView];
@@ -74,6 +77,7 @@
 
 - (void)webView:(UIWebView*)webView didFailLoadWithError:(NSError*)error
 {
+    self.estimatedProgress = 1.0;
     if ([self.forwardDelegate respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
         return [self.forwardDelegate webView:webView didFailLoadWithError:error];
     }

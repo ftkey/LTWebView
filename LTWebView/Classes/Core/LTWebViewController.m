@@ -18,7 +18,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
 [NSString stringWithFormat:@"%@/%@",[[[NSBundle bundleForClass:[LTWebViewController class]] bundlePath] stringByAppendingPathComponent:@"LTWebViewController.bundle"],name]
 #endif
 
-@interface LTWebViewController () <LTUIWebViewDelegate,LTWKNavigationDelegate,LTWKScriptMessageHandler>
+@interface LTWebViewController () <LTUIWebViewDelegate,LTWKNavigationDelegate>
 @property (nonatomic, strong) LTWebView *webView;
 @property (nonatomic, strong) UIButton *retryView;
 @property (nonatomic, assign) LTWebViewType webViewType;
@@ -151,7 +151,8 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     [self.navigationItem setLeftBarButtonItems:nil animated:NO];
 }
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         return YES;
@@ -163,6 +164,7 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self updateNavigationItems];
 }
+#pragma clang diagnostic pop
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     if ([super respondsToSelector:@selector(viewWillTransitionToSize:withTransitionCoordinator:)]) {
@@ -174,10 +176,10 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     [_webView stopLoading];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if (_webView.isWKWebView) {
-        _webView.wkNavigationDelegate.forwardDelegate = nil;
-        
+        _webView.wkNavigationDelegate = nil;
+
     }else{
-        _webView.webViewDelegate.forwardDelegate = nil;
+        _webView.uiWebViewDelegate = nil;
     }
 }
 - (void)didStartLoad {
@@ -450,9 +452,9 @@ NSLocalizedStringFromTableInBundle(key, @"LTWebViewController", [NSBundle bundle
     if (_webView) return _webView;
     _webView = [[LTWebView alloc] initWithFrame:CGRectZero webViewType:_webViewType];
     if (_webView.isWKWebView) {
-        _webView.wkNavigationDelegate.forwardDelegate = self;
+        _webView.wkNavigationDelegate = self;
     }else{
-        _webView.webViewDelegate.forwardDelegate = self;
+        _webView.uiWebViewDelegate = self;
     }
     if (_userAgent.length)  _webView.customUserAgent = _userAgent;
     _webView.translatesAutoresizingMaskIntoConstraints = false;

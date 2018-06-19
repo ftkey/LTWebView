@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "LTWebView"
-  s.version      = "2.0.2"
+  s.version      = "2.0.3"
   s.summary      = "LTWebView LTWebViewController is a UIWebView/WKWebView Controller ,Cookies/Gesture support . JSBridge Like Android addJavascriptInterface and name. "
   s.homepage     = "https://futao.me/"
   s.license      = "Apache License, Version 2.0"

@@ -12,9 +12,6 @@
 #import "LTWKNavigationDelegate.h"
 #import "LTWKWebViewConfiguration.h"
 
-#if LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES
-#import "LTWKWebViewCookiesHandler.h"
-#endif
 
 #if LT_WEBVIEW_USE_WK_IOS8_CUSTOM_USERAGENT
 @interface WKWebView (Privates)
@@ -26,11 +23,12 @@
 
 @interface LTWebView()
 @property (nonatomic,strong ) id webView;
-@property (nonatomic,strong) LTUIWebViewDelegate *webViewDelegate;
-@property (nonatomic,strong) LTWKWebViewUIDelegate *wkUIDelegate;//WK的UI 代理
-@property (nonatomic,strong) LTWKNavigationDelegate *wkNavigationDelegate;//WK的UI 代理
-@property (nonatomic,assign)  LTWebViewType type;
+@property (nonatomic,strong) LTUIWebViewDelegateImpl *ltuiWebViewDelegate;
+@property (nonatomic,strong) LTWKWebViewUIDelegateImpl *ltwkUIDelegate;//WK的UI 代理
+@property (nonatomic,strong) LTWKNavigationDelegateImpl *ltwkNavigationDelegate;//WK的UI 代理
+@property (nonatomic,assign) LTWebViewType type;
 @property (nonatomic, copy)   NSString     * title;
+@property (nonatomic, assign) CGFloat estimatedProgress;
 
 @property (nonatomic, strong) NSMutableURLRequest * originRequest;
 
@@ -43,22 +41,21 @@
     if(_isWKWebView)
     {
         WKWebView* webView = _webView;
-#if LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES
-        [[LTWKWebViewCookiesHandler defaultCookiesHandler] setWebView:nil];
-#endif
         [webView removeObserver:self forKeyPath:@"title"];
-        [self setWkUIDelegate:nil];
-        [self setWkNavigationDelegate:nil];
+        [webView removeObserver:self forKeyPath:@"estimatedProgress"];
+        self.wkNavigationDelegate = nil;
         webView.navigationDelegate = nil;
         webView.UIDelegate = nil;
-        
+        [webView.configuration.userContentController removeAllUserScripts];
+
     }
     else
     {
         UIWebView* webView = _webView;
-        [self setWebViewDelegate:nil];
+        [_ltuiWebViewDelegate removeObserver:self forKeyPath:@"title"];
+        [_ltuiWebViewDelegate removeObserver:self forKeyPath:@"estimatedProgress"];
+        self.uiWebViewDelegate = nil;
         webView.delegate = nil;
-        
     }
     [_webView scrollView].delegate = nil;
     [_webView stopLoading];
@@ -100,20 +97,19 @@
 - (void)initWKWebView{
     LTWKWebViewConfiguration* config = [LTWKWebViewConfiguration defaultConfiguration];
     WKWebView * webView = [[WKWebView alloc] initWithFrame:self.bounds configuration:config];
-#if LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES
-    [[LTWKWebViewCookiesHandler defaultCookiesHandler] setWebView:webView];
-    [[LTWKWebViewCookiesHandler defaultCookiesHandler] addCookieOutScriptWithController:config.userContentController];
-#endif
     _webView = webView;
     [self addSubview:webView];
     webView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[webView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(webView)]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(webView)]];
     [webView addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:nil];
+    [webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:NULL];
     [webView setAllowsBackForwardNavigationGestures:self.allowsBackForwardNavigationGestures];
     [[webView configuration] setAllowsInlineMediaPlayback:self.allowsInlineMediaPlayback];
-    self.wkUIDelegate = [[LTWKWebViewUIDelegate alloc] init];
-    self.wkNavigationDelegate =  [[LTWKNavigationDelegate alloc] init];
+    self.ltwkUIDelegate = [[LTWKWebViewUIDelegateImpl alloc] init];
+    self.ltwkNavigationDelegate =  [[LTWKNavigationDelegateImpl alloc] init];
+    webView.UIDelegate = self.ltwkUIDelegate;
+    webView.navigationDelegate = self.ltwkNavigationDelegate;
     _isWKWebView = YES;
     if (!_webView) {
         [self initUIWebView];
@@ -130,7 +126,10 @@
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(webView)]];
     [webView setScalesPageToFit:YES];
     [webView setAllowsInlineMediaPlayback:YES];
-    self.webViewDelegate = [[LTUIWebViewDelegate alloc] init];
+    self.ltuiWebViewDelegate = [[LTUIWebViewDelegateImpl alloc] init];
+    webView.delegate = self.ltuiWebViewDelegate;
+    [self.ltuiWebViewDelegate addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:nil];
+    [self.ltuiWebViewDelegate addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:NULL];
     if (@available(iOS 9.0, *)) {
         webView.allowsLinkPreview = YES;
     }
@@ -173,75 +172,42 @@
         return  [webView performSelector:@selector(customUserAgent) withObject:nil];
     }
 }
-- (void)setCookieWithCooksArray:(NSArray<NSString*> *)array domain: (NSString *) domain forRequest: (NSMutableURLRequest *) request {
-    
-    __block NSString * cookieForDocument = @"";
-    __block NSString * cookieForHeader   = @"";
-    [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[NSString class]]) {
-            if (self.isWKWebView) {
-                cookieForDocument = [cookieForDocument stringByAppendingString:[NSString stringWithFormat:@"document.cookie = '%@';",obj]];
-                cookieForHeader = [cookieForHeader stringByAppendingString:[NSString stringWithFormat:@"%@;",obj]];
-            }else{
-                NSHTTPCookie *cookie_temp = [NSHTTPCookie cookieWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:obj, NSHTTPCookieName,
-                                                                                @"", NSHTTPCookieValue,
-                                                                                domain, NSHTTPCookieDomain,
-                                                                                @"/", NSHTTPCookiePath,
-                                                                                [NSDate distantFuture], NSHTTPCookieExpires,
-                                                                                nil]];
-                [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie_temp];
-                
-            }
-            
-        }
-    }];
+- (void)evaluatingNavigatorUserAgentWithCompleted:(void (^)(NSString *userAgent))completed {
     if (_isWKWebView) {
-        if ([cookieForHeader hasSuffix:@";"]) {
-            cookieForHeader = [cookieForHeader substringToIndex:cookieForHeader.length-1];
-        }
-        
-        [request addValue:cookieForHeader forHTTPHeaderField:@"Cookie"];
-        if ([cookieForDocument hasSuffix:@";"]) {
-            cookieForDocument = [cookieForDocument substringToIndex:cookieForDocument.length-1];
-        }
-        NSLog(@"cookieForHeader=======%@",cookieForHeader);
-        NSLog(@"cookieForDocument======%@",cookieForDocument);
-        WKUserScript * cookieScript = [[WKUserScript alloc]initWithSource:cookieForDocument injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
-        [((WKWebView *)self.webView).configuration.userContentController addUserScript:cookieScript];
+        WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectZero];[wkWebView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(NSString *result, NSError *error) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                completed(result);
+            });
+        }];
+    }else {
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+        NSString *userAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            completed(userAgent);
+        });
     }
 }
-
-- (void)setWkUIDelegate:(LTWKWebViewUIDelegate *)wKUIDelegate {
-    _wkUIDelegate = wKUIDelegate;
-    ((WKWebView *)_webView).UIDelegate = wKUIDelegate;
-}
-- (void)setWkNavigationDelegate:(LTWKNavigationDelegate *)wkNavigationDelegate {
+-(void)setWkNavigationDelegate:(id<LTWKNavigationDelegate>)wkNavigationDelegate {
     _wkNavigationDelegate = wkNavigationDelegate;
-    ((WKWebView *)_webView).navigationDelegate = wkNavigationDelegate;
+    _ltwkNavigationDelegate.forwardDelegate = wkNavigationDelegate;
 }
-- (void)setWebViewDelegate:(LTUIWebViewDelegate *)webViewDelegate {
-    if (_webViewDelegate) {
-        [_webViewDelegate removeObserver:self forKeyPath:@"title"];
-    }
-    _webViewDelegate = webViewDelegate;
-    ((UIWebView *)_webView).delegate = webViewDelegate;
-    if (_webViewDelegate) {
-        [_webViewDelegate addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:nil];
-    }
+-(void)setUiWebViewDelegate:(id<LTUIWebViewDelegate>)uiWebViewDelegate {
+    _uiWebViewDelegate = uiWebViewDelegate;
+    _ltuiWebViewDelegate.forwardDelegate = uiWebViewDelegate;
 }
-
 #pragma mark - 属性方法
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"title"]) {
         self.title = change[NSKeyValueChangeNewKey];
     }
+    if ([keyPath isEqualToString:@"estimatedProgress"]) {
+        self.estimatedProgress = [change[NSKeyValueChangeNewKey] floatValue];
+    }
 }
-- (void)setJsDataModelName: (NSString *) jsDataModelName{
-    if (jsDataModelName.length > 0 && [_jsDataModelName isEqualToString:jsDataModelName] && _webView && [_webView isMemberOfClass:[WKWebView class]]) {
-        [((WKWebView *)_webView).configuration.userContentController addScriptMessageHandler:self.wkNavigationDelegate name:jsDataModelName];
-        _jsDataModelName = jsDataModelName;
-    }else{
-        _jsDataModelName = nil;
+- (void)setJSModelName:(NSString *)jsModelName scriptMessageHandler:(id <WKScriptMessageHandler>)scriptMessageHandler {
+    if (jsModelName) {
+        [((WKWebView *)_webView).configuration.userContentController removeScriptMessageHandlerForName:jsModelName];
+        [((WKWebView *)_webView).configuration.userContentController addScriptMessageHandler:scriptMessageHandler name:jsModelName];
     }
 }
 
@@ -299,40 +265,31 @@
         var head = document.getElementsByTagName('head')[0];\
         head.appendChild(meta);";
         
-        if(scalesPageToFit)
-        {
+        if(scalesPageToFit) {
             WKUserScript *wkUScript = [[WKUserScript alloc] initWithSource:jScript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:NO];
             [webView.configuration.userContentController addUserScript:wkUScript];
         }
-        else
-        {
+        else {
             NSMutableArray* array = [NSMutableArray arrayWithArray:webView.configuration.userContentController.userScripts];
-            for (WKUserScript *wkUScript in array)
-            {
+            for (WKUserScript *wkUScript in array) {
                 if([wkUScript.source isEqual:jScript])
                 {
                     [array removeObject:wkUScript];
                     break;
                 }
             }
-            for (WKUserScript *wkUScript in array)
-            {
+            for (WKUserScript *wkUScript in array) {
                 [webView.configuration.userContentController addUserScript:wkUScript];
             }
         }
     }
-    
     _scalesPageToFit = scalesPageToFit;
     
 }
 #pragma mark - 公共接口
 - (__nullable id)loadRequest:(NSURLRequest *)request{
     if (_isWKWebView) {
-#if LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES
-        NSMutableURLRequest *mreq = [[LTWKWebViewCookiesHandler preCookiesRequest:request] mutableCopy];
-#else
         NSMutableURLRequest *mreq = [request mutableCopy];
-#endif
         _originRequest = mreq;
         return [(WKWebView *)_webView loadRequest:self.originRequest];
     }else{
@@ -394,10 +351,21 @@
     }
 }
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^ __nullable)(__nullable id, NSError * __nullable error))completionHandler{
-    if (_isWKWebView) {
-        [(WKWebView *)_webView evaluateJavaScript:javaScriptString completionHandler:completionHandler];
+    if ([[NSThread currentThread] isMainThread]) {
+        [self _evaluateJavaScript:javaScriptString completionHandler:completionHandler];
+    }
+    else {
+        __weak typeof(self) weakSelf = self;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [weakSelf _evaluateJavaScript:javaScriptString completionHandler:completionHandler];
+        });
+    }
+}
+- (void)_evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^ __nullable)(__nullable id, NSError * __nullable error))completionHandler {
+    if (self.isWKWebView) {
+        [(WKWebView *)self.webView evaluateJavaScript:javaScriptString completionHandler:completionHandler];
     }else{
-        NSString * resustString = [(UIWebView *)_webView stringByEvaluatingJavaScriptFromString:javaScriptString];
+        NSString * resustString = [(UIWebView *)self.webView stringByEvaluatingJavaScriptFromString:javaScriptString];
         if (completionHandler) {
             completionHandler(resustString,nil);
         }
@@ -422,7 +390,6 @@
         completion();
     }
 }
-
 @end
 
 

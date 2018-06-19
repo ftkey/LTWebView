@@ -12,13 +12,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol LTWKScriptMessageHandler <NSObject>
-
-@optional
-
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message;
-
-@end
+//@protocol LTWKScriptMessageHandler <NSObject>
+//
+//@optional
+//
+//- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message;
+//
+//@end
 @protocol LTWKNavigationDelegate <NSObject>
 
 @optional
@@ -49,9 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView NS_AVAILABLE(10_11, 9_0);
 
 @end
-@interface LTWKNavigationDelegate : NSObject<WKScriptMessageHandler, WKNavigationDelegate>
+@interface LTWKNavigationDelegateImpl : NSObject<WKNavigationDelegate>
 
-@property (nonatomic, weak,nullable) id <LTWKScriptMessageHandler, LTWKNavigationDelegate> forwardDelegate;
+@property (nonatomic, weak,nullable) id <LTWKNavigationDelegate> forwardDelegate;
 @property (nonatomic, weak)WKWebView *webView;
 - (instancetype)init;
 @end

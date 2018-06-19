@@ -19,7 +19,6 @@ NS_SWIFT_NAME(LTWebCookiesManager)
 
 +(instancetype)defaultManager;
 
-// 自动缓存Cookies,无需手动参与
 - (void)setAllowAutoSyncWebCookies:(BOOL)isAuto;
 // 这几段方法是可以手动获取cookies并保存,例如登录之后存储,下次启动APP继续是登录状态
 // 获取当前系统中已有的Cookies;

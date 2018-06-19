@@ -44,19 +44,10 @@
                                     <action selector="onPush:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g2s-LX-TCj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jy-Gv-SkN">
-                                <rect key="frame" x="142" y="379" width="91" height="30"/>
-                                <state key="normal" title="Push JS Web"/>
-                                <connections>
-                                    <action selector="onPushJS:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XHI-ue-Obd"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="P6l-Vn-47Q" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Ui3-vU-rlC"/>
-                            <constraint firstItem="4jy-Gv-SkN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="adk-aO-Ow4"/>
-                            <constraint firstItem="4jy-Gv-SkN" firstAttribute="top" secondItem="P6l-Vn-47Q" secondAttribute="bottom" constant="30.5" id="f6z-en-7Cp"/>
                             <constraint firstItem="P6l-Vn-47Q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ldZ-gU-zpA"/>
                         </constraints>
                     </view>

@@ -22,11 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 #define LT_WEBVIEW_USE_WK_IOS8_CUSTOM_USERAGENT 1
 #endif
 
-// WK默认不支持POST方式的Cookies共享 (使用LTWebCookiesManager来管理Cookies更方便)
-#ifndef LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES
-#define LT_WEBVIEW_USE_WK_AUTO_SHARED_POST_COOKIES 0
-#endif
-
 
 NS_SWIFT_NAME(WebViewType)
 typedef NS_ENUM(NSUInteger,LTWebViewType) {
@@ -38,9 +33,9 @@ NS_SWIFT_NAME(LTWebView)
 @interface LTWebView : UIView
 //内部使用的webView,UIWebView or WKWebView
 @property (nonatomic,strong ,readonly ) id webView;
-@property (nonatomic,strong ,readonly ,nullable) LTUIWebViewDelegate *webViewDelegate;
-@property (nonatomic,strong ,readonly ,nullable) LTWKWebViewUIDelegate *wkUIDelegate;//WK的UI 代理
-@property (nonatomic,strong ,readonly ,nullable) LTWKNavigationDelegate *wkNavigationDelegate;//WK的UI 代理
+
+@property (nonatomic,weak,nullable) id<LTUIWebViewDelegate> uiWebViewDelegate; // 转发UIWebViewDelegate
+@property (nonatomic,weak,nullable) id<LTWKNavigationDelegate> wkNavigationDelegate; // 转发WKNavigationDelegate
 
 @property (nonatomic,strong,nullable) NSString *customUserAgent; //自定义
 @property (nonatomic,assign) BOOL isWKWebView;//webView是否为WKWebView
@@ -50,10 +45,13 @@ NS_SWIFT_NAME(LTWebView)
 - (nullable id)loadHTMLString:(NSString *)string baseURL:(nullable NSURL *)baseURL;
 - (nullable id)loadData:(NSData *)data MIMEType:(nullable NSString *)MIMEType textEncodingName:(nullable NSString *)textEncodingName baseURL:(nullable NSURL *)baseURL ;
 @property (nullable, nonatomic, readonly, copy)   NSString *title;
+@property (nonatomic, readonly, assign) CGFloat estimatedProgress;
+
+
 @property (nullable, nonatomic, readonly, strong) NSURLRequest *originRequest;
 @property (nullable, nonatomic, readonly, strong) NSURL *URL;
 
-@property (nullable, nonatomic, copy,getter = jsDataModelName) NSString * jsDataModelName;//js注入数据的数据模型，在wkwebView 上有效
+
 - (__nullable id)reload;
 - (void)stopLoading;
 
@@ -64,24 +62,21 @@ NS_SWIFT_NAME(LTWebView)
 @property (nonatomic, readonly, getter=canGoForward) BOOL canGoForward;
 @property (nonatomic, readonly, getter=isLoading) BOOL loading;
 
-- (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^ __nullable)(__nullable id, NSError * __nullable error))completionHandler;
+- (void)setJSModelName:(NSString *)jsDataModelName scriptMessageHandler:(id <WKScriptMessageHandler>)scriptMessageHandler; // 注册JSModelName
+- (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^ __nullable)(__nullable id, NSError * __nullable error))completionHandler; // 永远主线程调用
 
 @property (nonatomic) BOOL allowsInlineMediaPlayback; // defaults to YES
 @property (nonatomic) BOOL allowsBackForwardNavigationGestures;// defaults to NO，对WKWebView有效
 @property (nullable, nonatomic, readonly, strong) UIScrollView *scrollView;
 // Clear cache data of web view.
-//
 // @param completion completion block.
 + (void)clearWebCacheCompletion:(dispatch_block_t)completion;
-
-
-//UIWebView 与WKWebview 设置cookie的方法不同
-//@para array中存放的是需要设置的cookie值,类型为NSString类型  。domain表示设置cookie的域，UIWebView需要使用此值
-- (void)setCookieWithCooksArray:(NSArray<NSString*> *)array domain: (NSString *) domain forRequest: (NSMutableURLRequest *)request;
-
 //以下针对UIWebView ，如果使用的是WKWebview，相应设置无效
 //是否根据视图大小来缩放页面  默认为YES
 @property (nonatomic) BOOL scalesPageToFit;
+
+// 通过navigator.userAgent获取UserAgent
+- (void)evaluatingNavigatorUserAgentWithCompleted:(void (^)(NSString *userAgent))completed ;
 //@property (nonatomic) UIDataDetectorTypes dataDetectorTypes;
 
 @end

@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 NS_SWIFT_NAME(LTWebViewController)
-@interface LTWebViewController : UIViewController<LTUIWebViewDelegate,LTWKNavigationDelegate,LTWKScriptMessageHandler>
+@interface LTWebViewController : UIViewController<LTUIWebViewDelegate,LTWKNavigationDelegate>
 // UIWebView 、 WKWebView
 @property (nonatomic, readonly, strong) LTWebView *webView;
 // Not yet implementation
